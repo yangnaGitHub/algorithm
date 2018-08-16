@@ -1,0 +1,578 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0060)http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/bundle-iMetro_HD.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/Anker/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/Anker/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/Anker/wlwmanifest.xml">
+<script type="text/javascript" src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/encoder.js"></script><script src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'Anker', cb_enable_mathjax=false;</script>
+<script src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/blog-common.js" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/Anker/"><img id="blogLogo" src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/Anker/">Anker—学习成长笔记</a></h1>
+<h2>关注数据存储、文件系统</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/Anker/">首页</a></li>
+<li><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://msg.cnblogs.com/send/Anker%26%2339%3Bs%20Blog">联系</a></li>
+<li><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/Anker/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/Anker/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔- 138&nbsp;
+文章- 2&nbsp;
+评论- 259&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园.htm">《算法导论》读书笔记之第14章 数据结构的扩张</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><strong>　　前言：</strong>通常我们会遇到一些问题，采用一些标准的数据结构，如双链表、散列表或二叉查找数时，不能够满足操作要求，需要对这些数据结构进行扩张，添加一些额外的信息使得能够完成新的操作。附加的信息需要对数据结构的某些操作进行调整，这个是非常关键的步骤，决定着数据结构扩张是否能够实现。本章主要讨论了红黑树结构的扩张，介绍了两种扩张方式。第一种方式扩张使得红黑色能够支持动态集合上顺序统计，快速找出集合中第i小的数，或给出某个元素在集合的全序中的排名。第二种方式扩张使得红黑色能够进行区间操作，可以很快地找到集合中覆盖的区间。关于红黑色请参考第13章，<a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html">http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html</a>。</p>
+<p><strong>1、动态顺序统计</strong></p>
+<p>　　在第九章介绍了顺序统计的概念，大概的意思是在包含有n个元素的集合中，第i个顺序统计量指的是该集合中第i小的元素。在一个无序的集合中，任意顺序统计量都可以在O(n)时间内找到，详细情况可以参考<a href="http://www.cnblogs.com/Anker/archive/2013/01/25/2877311.html">http://www.cnblogs.com/Anker/archive/2013/01/25/2877311.html</a>。书中在此基础上修改红黑树的结构，使得任意的顺序统计量都可以再O(lgn)时间内确定。向红黑树的结构中添加一个size域，表示包含自身节点的当前节点的子树节点的数目。这样修改后可以快速支持顺序统计量操作，将这种修改后的红黑树叫做：<strong><span style="color: #ff00ff;">顺序统计量树T</span></strong>。修改后的结构如下所示：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 15px;"><span style="color: #008080;">1</span> <span style="color: #0000ff;">struct</span><span style="color: #000000;"> RBTreeNode
+</span><span style="color: #008080;">2</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">3</span>    <span style="color: #0000ff;">int</span><span style="color: #000000;"> key;
+</span><span style="color: #008080;">4</span>    <span style="color: #0000ff;">int</span><span style="color: #000000;"> color;
+</span><span style="color: #008080;">5</span>    <span style="color: #0000ff;">struct</span> RBTreeNode *<span style="color: #000000;">parent;
+</span><span style="color: #008080;">6</span>    <span style="color: #0000ff;">struct</span> RBTreeNode *<span style="color: #000000;">left;
+</span><span style="color: #008080;">7</span>    <span style="color: #0000ff;">struct</span> RBTreeNode *<span style="color: #000000;">right;
+</span><span style="color: #008080;">8</span>    <span style="color: #0000ff;">int</span><span style="color: #000000;"> size;  
+</span><span style="color: #008080;">9</span> };</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>例如给定红黑树的一个节点x，则<span style="color: #ff00ff;"><strong>size[x] = size[left[x]]+size[right[x]]+1</strong></span>。size[x]为包含以x为根的子树的节点数（包含x本身），即子树的大小。如果哨兵定义为0，即设置<strong><span style="color: #ff00ff;">size[nil[T]]=0</span></strong>。</p>
+<p>下面给出一个修改后的红黑树的例子，如下图所示：</p>
+<p><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/09094930-1ee511ca77d045169c5289e8c96f6af3.png" alt=""></p>
+<p>　　红黑树是二叉排序树，按照中序遍历从小到大输出红黑树中的关键字。从图中可以看出，添加size域后，很方便看出每个节点的子树的节点数目（包含自身节点）。书中在后面讨论这种结构的操作，分别讨论如下：</p>
+<p><strong>（1）检索具有给定排序的元素</strong></p>
+<p>　　过程OS_SELECT(x,i)返回一个指向以x为根的子树中包含第小关键字的结点的指针，<strong>即为了找出顺序统计量树T中的第i小关键字，可以调用OS_SELECT(root[T],i)</strong>。书中给出了伪代码如下：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 15px;"><span style="color: #008080;">1</span> <span style="color: #000000;">OS_SELECT(x,i)
+</span><span style="color: #008080;">2</span>     r = size[left[x]]+<span style="color: #800080;">1</span><span style="color: #000000;">; <span style="color: #008000;">//先计算x的处于的位置
+</span></span><span style="color: #008080;">3</span>     <span style="color: #0000ff;">if</span> i =<span style="color: #000000;"> r         <span style="color: #008000;">//x正好是第i小的关键字
+</span></span><span style="color: #008080;">4</span>         then <span style="color: #0000ff;">return</span><span style="color: #000000;"> x;
+</span><span style="color: #008080;">5</span>     <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> i &lt;<span style="color: #000000;"> r   <span style="color: #008000;">//x比第i关键字大，则在其左子树查找
+</span></span><span style="color: #008080;">6</span>         then <span style="color: #0000ff;">return</span><span style="color: #000000;"> OS_SELECT(left[x],i)
+</span><span style="color: #008080;">7</span>     <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">return</span> OS_SELECT(right[x],i-r)  <span style="color: #008000;">//x比第i关键字小，则在其右子树查找</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>　　该过程类似二分查找，每一次递归调用都在顺序统计数中下降一层，故最坏情况下OS_SELECT的总时间与树的高度成正比，红黑树的高度为lgn。故OS_SELECT的运行时间为：O(lgn)。</p>
+<p><strong>（2）确定一个元素的秩（位置）</strong></p>
+<p>　　给定指向一顺序统计树T中节点x的指针，<span style="color: #ff00ff;"><strong>求x在顺序统计树中序遍历得到的线性序中的位置</strong></span>。书中给出了OS_RANK(T,x)过程的伪代码：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 15px;"><span style="color: #008080;">1</span> <span style="color: #000000;">OS_RANK(T,x)
+</span><span style="color: #008080;">2</span>     r = size[left[x]]+<span style="color: #800080;">1</span><span style="color: #000000;">;   <span style="color: #008000;">//获取以x为根子树中x的位置（中序遍历）
+</span></span><span style="color: #008080;">3</span>     y =<span style="color: #000000;"> x;
+</span><span style="color: #008080;">4</span>     <span style="color: #0000ff;">while</span> y !=<span style="color: #000000;"> root[T]    <span style="color: #008000;">//从下向上直到根节点
+</span></span><span style="color: #008080;">5</span>           <span style="color: #0000ff;">do</span> <span style="color: #0000ff;">if</span> y =<span style="color: #000000;"> right[p[y]]   <span style="color: #008000;">//如果是右子树
+</span></span><span style="color: #008080;">6</span>                   then  r = r + size[left[p[y]]]+<span style="color: #800080;">1</span><span style="color: #000000;">; 
+</span><span style="color: #008080;">7</span>           y =<span style="color: #000000;"> p[y]; <span style="color: #008000;">//向上移动
+</span></span><span style="color: #008080;">8</span>     <span style="color: #0000ff;">return</span> r;</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>　　从程序总可以看出当y == root[T]时候循环终止，此时以y为根的子树是课完整树，此时r值是这颗整树中key[x]的秩。while循环中的每一次迭代花O(1)时间，且y在每次迭代中沿树上升一层，故在最坏情况下0S_RANK的运行时间与树的高度成正比：对含n个节点的顺序统计树时间为O(lgn)。</p>
+<p><strong>（3）对子树规模的维护</strong></p>
+<p>　　在红黑树中添加size域后，能够通过OS_SELECT和OS_RANK迅速计算出所需的顺序统信息。通过修改红黑树的插入和删除操作，在此过程是通过旋转来修改size域。关于这部分需要在红黑树的基础上进行改进，比较复杂，暂时没有实现。</p>
+<p><strong>2、如何扩张数据结构</strong></p>
+<p>对一种数据结构的扩张过程分为四个步骤：</p>
+<p><strong><span style="color: #ff00ff;">1）选择基础数据结构</span></strong></p>
+<p><strong><span style="color: #ff00ff;">2）确定要在基础数据结构中添加哪些信息</span></strong></p>
+<p><strong><span style="color: #ff00ff;">3）验证可用基础数据结构上的基本修改操作来维护这些新添加的信息</span></strong></p>
+<p><strong><span style="color: #ff00ff;">4）设计新的操作</span></strong></p>
+<p>　　书中给出了对红黑树进行扩张的定理，并给出了证明，这个看的时候有些难度，暂时跳过了。大概意思就是说当红黑树被选作基础数据结构时，某些类型的附加信息总是可以用插入和删除来进行有效地维护。</p>
+<p>3、区间树</p>
+<p>　　这小结讲的是扩张红黑树以支持由区间构成的动态集合上的操作。区间可以很方便的表示各占用一段连续时间的一些事情。区间树是一种动态集合进行维护的红黑树，该集合中的每个元素x都包含在一个区间int[x]。区间树支持下列操作：</p>
+<p>INTERVAL_INSERT(T,x)：将包含区间域int的元素x插入到区间树T中</p>
+<p>INTERVAL_DELETE(T,X)：从区间树T中删除元素x</p>
+<p>INTERVAL_SEARCH(T,i)：返回一个指向区间树T中元素x的指针，使int[x]与i重叠，若集合中无此元素存在，则返回nil[T]。</p>
+<p>修改红黑树得到的区间树如下图所示：</p>
+<p><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/09105408-9a2f325eca8742c982cccd8408bbc71f.png" alt=""></p>
+<p>从图可以看出，对区间树以每个节点的左端点值进行中序变量即可得到有序的序列。有了区间树的结果就很容易实现其相关操作。</p>
+<p><strong>4、总结</strong></p>
+<p>　　本章主要是介绍一种数据结构扩张的方法，灵活性非常之大。以红黑树作为例子，我是在年前看的红黑树，并给以实现。年后了，对红黑树忘了差不多了。呵呵，真是一天不学习，赶不上啦。本章看完比较郁闷，没有去实现。实现的难度非常具有挑战性，何时能够实现，我心里有些忐忑。肯定不会放弃，一定会找个时间把这些实现一下。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></div><div id="MySignature" style="display: block;">冷静思考，勇敢面对，把握未来！</div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/Anker/category/436374.html">数据结构与算法</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(2951232,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://msg.cnblogs.com/send/Anker%26%2339%3Bs%20Blog" target="_blank">联系我</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/icon_weibo_24.png" alt=""></a>
+<a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/Anker/" target="_blank"><img src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/u305504.png" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/Anker/">Anker's Blog</a><br>
+<a href="http://home.cnblogs.com/u/Anker/followees">关注 - 13</a><br>
+<a href="http://home.cnblogs.com/u/Anker/followers">粉丝 - 570</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(2951232,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">1</span>
+    </div>
+	<div class="buryit" onclick="votePost(2951232,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/Anker/archive/2013/03/04/2943498.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/Anker/archive/2013/03/04/2943498.html" title="发布于2013-03-04 22:12">递归与尾递归总结</a><br><a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951785.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951785.html" title="发布于2013-03-09 18:10">《算法导论》读书笔记之第15章 动态规划—装配线调度</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2013-03-09 11:01</span> <a href="http://www.cnblogs.com/Anker/">Anker's Blog</a> 阅读(<span id="post_view_count">1652</span>) 评论(<span id="post_comment_count">3</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=2951232" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html#" onclick="AddToWz(2951232);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=90566,cb_entryId=2951232,cb_blogApp=currentBlogApp,cb_blogUserGuid='91cfcfb7-5c8c-e011-a53f-842b2b196315',cb_entryCreatedDate='2013/3/9 11:01:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html#2631287" class="layer">#1楼</a><a name="2631287" id="comment_anchor_2631287"></a>  <span class="comment_date">2013-03-09 12:38</span> <a id="a_comment_author_2631287" href="http://www.cnblogs.com/igeneral/" target="_blank">iGeneral</a> <a href="http://msg.cnblogs.com/send/iGeneral" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2631287" class="blog_comment_body">朋友，《算法导论》系列的文章是你自己总结的 吗？写的很不错！加油！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2631287,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2631287,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2631287_avatar" style="display:none;">http://pic.cnblogs.com/face/412980/20130324213359.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html#2631304" class="layer">#2楼</a><a name="2631304" id="comment_anchor_2631304"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2013-03-09 13:32</span> <a id="a_comment_author_2631304" href="http://www.cnblogs.com/Anker/" target="_blank">Anker's Blog</a> <a href="http://msg.cnblogs.com/send/Anker%26%2339%3Bs%20Blog" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2631304" class="blog_comment_body"><a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html#2631287" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2631287);">@</a>iGeneral<br>我正在看《算法导论》，博客记录全部是我总结的。欢迎一起交流</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2631304,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2631304,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2631304_avatar" style="display:none;">http://pic.cnblogs.com/face/u305504.png?id=08095526</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html#2632958" class="layer">#3楼</a><a name="2632958" id="comment_anchor_2632958"></a><span id="comment-maxId" style="display:none;">2632958</span><span id="comment-maxDate" style="display:none;">2013/3/12 12:56:51</span>  <span class="comment_date">2013-03-12 12:56</span> <a id="a_comment_author_2632958" href="http://www.cnblogs.com/igeneral/" target="_blank">iGeneral</a> <a href="http://msg.cnblogs.com/send/iGeneral" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2632958" class="blog_comment_body"><a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html#2631304" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2631304);">@</a>Anker's Blog<br>我也正在学习《算法导论》，还请赐教哦！哈哈。。。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2632958,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2632958,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2632958_avatar" style="display:none;">http://pic.cnblogs.com/face/412980/20130324213359.png</span>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="http://www.rongcloud.cn/" target="_blank">【推荐】融云即时通讯云－专注为 App 开发者提供IM云服务</a><br><a href="https://www.jpush.cn/" target="_blank">【推荐】极光推送30多万开发者的选择，SDK接入量超过30亿了，你还没注册？</a><br><a href="http://click.aliyun.com/m/994/" target="_blank">【免费测】根据网站PV推荐完整架构方案</a><br></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    fixPostBodyFormat();
+</script>
+<div id="google_ad_c1" class="c_ad_block"><a href="http://www.gcpowertools.com.cn/products/componentone.htm?utm_source=cnblogs&utm_medium=blogpage&utm_term=bottom&utm_content=C1&utm_campaign=community" target="_blank"><img width="300" height="250" src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/24442-20151030141701419-628671799.gif" alt="" title=""></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/534442/" target="_blank">黒五促销效果明显，百思买将再对Apple Watch降价</a><br> ·  <a href="http://news.cnblogs.com/n/534424/" target="_blank">新WordPress.com背后的故事</a><br> ·  <a href="http://news.cnblogs.com/n/534438/" target="_blank">研究称开普勒望远镜发现的系外行星半数存疑</a><br> ·  <a href="http://news.cnblogs.com/n/534408/" target="_blank">解密黑科技：谷歌热气球上网计划怎么实现</a><br> ·  <a href="http://news.cnblogs.com/n/534441/" target="_blank">齐向东拟3亿美元收购360企业安全业务</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="google_ad_c2" class="c_ad_block"><a href="http://e.jikexueyuan.com/android.html?hmsr=cnb_banner_android_12.04" target="_blank"><img width="468" height="60" src="./《算法导论》读书笔记之第14章 数据结构的扩张 - Anker's Blog - 博客园_files/24442-20151204161943924-1792732085.jpg" alt="极客学院" title="极客学院"></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/527814/" target="_blank">从涂鸦到发布——理解API的设计过程</a><br> ·  <a href="http://kb.cnblogs.com/page/531834/" target="_blank">好的架构是进化来的，不是设计来的</a><br> ·  <a href="http://kb.cnblogs.com/page/532236/" target="_blank">被误解的MVC和被神化的MVVM</a><br> ·  <a href="http://kb.cnblogs.com/page/530046/" target="_blank">再谈设计和编码</a><br> ·  <a href="http://kb.cnblogs.com/page/531270/" target="_blank">什么时候应该避免写代码注释？</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/Anker/">Anker's Blog</a><br>园龄：<a href="http://home.cnblogs.com/u/Anker/" title="入园时间：2011-06-01">4年6个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/Anker/followers/">570</a><br>关注：<a href="http://home.cnblogs.com/u/Anker/followees/">13</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;91cfcfb7-5c8c-e011-a53f-842b2b196315&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2013/02/01&#39;);return false;">&lt;</a></td><td align="center">2013年3月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2013/04/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">24</td><td class="CalOtherMonthDay" align="center">25</td><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td align="center">1</td><td class="CalWeekendDay" align="center">2</td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/03/03.html"><u>3</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/03/04.html"><u>4</u></a></td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/03/09.html"><u>9</u></a></td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/03/10.html"><u>10</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/03/11.html"><u>11</u></a></td><td align="center">12</td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/03/13.html"><u>13</u></a></td><td align="center">14</td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/03/15.html"><u>15</u></a></td><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/03/16.html"><u>16</u></a></td></tr><tr><td class="CalWeekendDay" align="center">17</td><td align="center">18</td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td class="CalWeekendDay" align="center">23</td></tr><tr><td class="CalWeekendDay" align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td class="CalWeekendDay" align="center">30</td></tr><tr><td class="CalWeekendDay" align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/Anker/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/Anker/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/Anker/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/Anker/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/Anker/tag/" title="我的博客的标签列表">我的标签</a></li>
+<li><a id="itemListLink" onclick="this.blur();WarpClass(&#39;itemListLink&#39;, &#39;itemListLin_con&#39;);return false;" href="http://www.cnblogs.com/Anker/archive/2013/03/09/2951232.html#">更多链接</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_recentposts" class="sidebar-block">
+<div class="catListEssay">
+<h3 class="catListTitle">最新随笔</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/Anker/p/4706244.html">1. zeromq学习笔记2——简单的客户端和服务端测试程序</a></li><li><a href="http://www.cnblogs.com/Anker/p/4706111.html">2. zeromq学习笔记1——centos下安装 zeromq-4.1.2</a></li><li><a href="http://www.cnblogs.com/Anker/p/4529465.html">3. shell中函数返回值</a></li><li><a href="http://www.cnblogs.com/Anker/p/4064091.html">4. linux性能采用工具oprofile使用</a></li><li><a href="http://www.cnblogs.com/Anker/p/4034087.html">5. 二层设备与三层设备的区别--总结</a></li><li><a href="http://www.cnblogs.com/Anker/p/3999221.html">6. 转载-vim配置收藏</a></li><li><a href="http://www.cnblogs.com/Anker/p/3864230.html">7. 并发无锁队列学习之二【单生产者单消费者】</a></li><li><a href="http://www.cnblogs.com/Anker/p/3823572.html">8. 并发无锁队列学习之一【开篇】</a></li><li><a href="http://www.cnblogs.com/Anker/p/3807228.html">9. 【收藏】介绍RCU的好文章</a></li><li><a href="http://www.cnblogs.com/Anker/p/3751369.html">10. linux 系统调用sysconf【总结】</a></li>
+</ul>
+</div>
+</div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类<span style="font-size:11px;font-weight:normal">(151)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/Anker/category/436371.html">C/C++语言(18)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/Anker/category/694556.html">LeetCode</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/Anker/category/513502.html">Linux命令学习(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/Anker/category/509893.html">Linux内核学习(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/Anker/category/436373.html">Linux驱动编程(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/Anker/category/553078.html">Mysql(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/Anker/category/527391.html">PHP后台(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/Anker/category/694189.html">shell脚本(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/Anker/category/436372.html">Unix/Linux环境编程(47)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/Anker/category/436376.html">编译原理与应用</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/Anker/category/521472.html">工具使用(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/Anker/category/442770.html">进程间通信IPC(14)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/Anker/category/509895.html">开源库学习(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/Anker/category/542222.html">深入理解计算机系统</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/Anker/category/326104.html">生活日志(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/Anker/category/436374.html">数据结构与算法(25)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/Anker/category/532019.html">数据序列化(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_17" href="http://www.cnblogs.com/Anker/category/436375.html">网络编程(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_18" href="http://www.cnblogs.com/Anker/category/442998.html">网络转载(3)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案<span style="font-size:11px;font-weight:normal">(138)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/Anker/archive/2015/08.html">2015年8月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/Anker/archive/2015/05.html">2015年5月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/Anker/archive/2014/10.html">2014年10月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/Anker/archive/2014/09.html">2014年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/Anker/archive/2014/07.html">2014年7月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/Anker/archive/2014/06.html">2014年6月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/Anker/archive/2014/05.html">2014年5月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/Anker/archive/2014/04.html">2014年4月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/Anker/archive/2014/03.html">2014年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/Anker/archive/2014/02.html">2014年2月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/Anker/archive/2014/01.html">2014年1月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/Anker/archive/2013/12.html">2013年12月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/Anker/archive/2013/11.html">2013年11月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/Anker/archive/2013/10.html">2013年10月 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/Anker/archive/2013/09.html">2013年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/Anker/archive/2013/08.html">2013年8月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/Anker/archive/2013/07.html">2013年7月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/Anker/archive/2013/05.html">2013年5月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/Anker/archive/2013/03.html">2013年3月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/Anker/archive/2013/02.html">2013年2月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/Anker/archive/2013/01.html">2013年1月 (31)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/Anker/archive/2012/12.html">2012年12月 (27)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/Anker/archive/2011/07.html">2011年7月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_articlearchive" class="catListArticleArchive sidebar-block">
+<h3 class="catListTitle">文章档案<span style="font-size:11px;font-weight:normal">(2)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/Anker/archives/2013/08.html" rel="nofollow">2013年8月 (2)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_imagecategory" class="catListImageCategory sidebar-block">
+<h3 class="catListTitle">相册<span style="font-size:11px;font-weight:normal">(1)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_3_Link_0" href="http://www.cnblogs.com/Anker/gallery/326112.html" rel="nofollow">程序截图(1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_it新闻" class="catListIT新闻 sidebar-block">
+<h3 class="catListTitle">IT News</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_4_Link_0" href="http://www.36kr.com/" rel="nofollow">36kr关注互联网创业</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_1" href="http://www.infoq.com/cn/" rel="nofollow">Infoq</a> </li>
+<li class="c_b_p_link_desc">InfoQ（Information Queue）</li>
+<li><a id="CatList_LinkList_4_Link_2" href="http://www.20ju.com/" rel="nofollow">草根网</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_3" href="http://www.huxiu.com/" rel="nofollow">虎嗅网</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_4" href="http://www.ebusinessreview.cn/" rel="nofollow">商业评论网</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_5" href="http://www.tektalk.org/" rel="nofollow">弯曲评论</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_大牛的博客，向他们学习" class="catList大牛的博客，向他们学习 sidebar-block">
+<h3 class="catListTitle">技术博客</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_5_Link_0" href="http://blog.yufeng.info/" rel="nofollow">Erlang非业余研究</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_1" href="http://www.ibm.com/developerworks/cn/" rel="nofollow">IBM developerWorks</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_2" href="http://www.cnblogs.com/xinz/" rel="nofollow">SoftwareTeacher</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_3" href="http://stblog.baidu-tech.com/?paged=3" rel="nofollow">百度搜索研发部官方博客 </a> </li>
+
+<li><a id="CatList_LinkList_5_Link_4" href="http://www.pagefault.info/" rel="nofollow">雕梁nginx和内核</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_5" href="http://coolshell.cn/" rel="nofollow">酷壳coolshell</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_6" href="http://code.taobao.org/" rel="nofollow">淘宝的 code project</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_7" href="http://rdc.taobao.com/blog/cs/" rel="nofollow">淘宝核心系统团队博客</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_8" href="http://www.taobaodba.com/" rel="nofollow">淘宝数据库技术团队</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_9" href="http://blog.csdn.net/soso_blog" rel="nofollow">腾讯soso团队博客 </a> </li>
+
+<li><a id="CatList_LinkList_5_Link_10" href="http://blog.s135.com/index.php" rel="nofollow">张宴的Blog底层开发</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_不错的个人博客收藏" class="catList不错的个人博客收藏 sidebar-block">
+<h3 class="catListTitle">牛人博客</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_6_Link_0" href="http://lenky.info/" rel="nofollow">Lenky</a> </li>
+
+<li><a id="CatList_LinkList_6_Link_1" href="http://lusongsong.com/info/" rel="nofollow">卢松松</a> </li>
+
+<li><a id="CatList_LinkList_6_Link_2" href="http://blog.yufeng.info/" rel="nofollow">淘宝褚霸</a> </li>
+
+<li><a id="CatList_LinkList_6_Link_3" href="http://eli.thegreenplace.net/category/programming/lisp/sicp/">以色列学生的SICP笔记</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	210996
+	</li>
+	<li class="liRank">
+		排名 -	666
+	</li>
+</ul>
+</div>
+
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3746802.html#3315947">1. Re:采用dlopen、dlsym、dlclose加载动态链接库【总结】</a></li>
+    <li class="recent_comment_body">好文章，</li>
+    <li class="recent_comment_author">--Gru--</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3203402.html#3310982">2. Re:Centos安装gcc及g++</a></li>
+    <li class="recent_comment_body">学习了</li>
+    <li class="recent_comment_author">--小彩笔</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3265058.html#3298049">3. Re:select、poll、epoll之间的区别总结[整理]</a></li>
+    <li class="recent_comment_body">楼主好人！！！</li>
+    <li class="recent_comment_author">--itfanr</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3258674.html#3292100">4. Re:IO多路复用之select总结</a></li>
+    <li class="recent_comment_body">pool和select的参数不是引用参数吗，为什么博主说要进行大量的数组复制呢，不是只传递地址吗</li>
+    <li class="recent_comment_author">--布衣士子</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3263780.html#3287041">5. Re:IO多路复用之epoll总结</a></li>
+    <li class="recent_comment_body">看了很多，就看你这篇看懂这个epoll，很严谨</li>
+    <li class="recent_comment_author">--Hzhang</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3269106.html#3285477">6. Re:用户空间与内核空间，进程上下文与中断上下文[总结]</a></li>
+    <li class="recent_comment_body">@日落城嗯，承认楼主的一些基本概念并不清晰，啃起内核中断处理这一块比较麻烦。不过论急躁程度您也不遑多让。TSS只是存储上下文的其中一段内存，除了TSS之外还涉及各种esp和其他的内存段，不能直接说上下......</li>
+    <li class="recent_comment_author">--Tentacle</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3271773.html#3276633">7. Re:孤儿进程与僵尸进程[总结]</a></li>
+    <li class="recent_comment_body">赞!</li>
+    <li class="recent_comment_author">--lxw0109</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3746802.html#3272898">8. Re:采用dlopen、dlsym、dlclose加载动态链接库【总结】</a></li>
+    <li class="recent_comment_body">@随意飘荡void *dlsym(void *handle, const char *symbol);返回值为void*(void **)&amp;(cac_func)是将函数指针的地址强制转换void**类......</li>
+    <li class="recent_comment_author">--Anker&amp;#39;s Blog</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3746802.html#3272610">9. Re:采用dlopen、dlsym、dlclose加载动态链接库【总结】</a></li>
+    <li class="recent_comment_body">28 行： *(void **) (&amp;cac_func) = dlsym(handle, "add");想了半天没明白前面的 *(void **) 是啥意思，楼猪还在不，谢谢。...</li>
+    <li class="recent_comment_author">--随意飘荡</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3258674.html#3272199">10. Re:IO多路复用之select总结</a></li>
+    <li class="recent_comment_body">@champion_lee之前是由于少了两个头文件#include #include...</li>
+    <li class="recent_comment_author">--Anker&amp;#39;s Blog</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/Anker/p/3265058.html">1. select、poll、epoll之间的区别总结[整理](47662)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3258674.html">2. IO多路复用之select总结(19929)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3271773.html">3. 孤儿进程与僵尸进程[总结](17751)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3263780.html">4. IO多路复用之epoll总结(15522)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3242207.html">5. 多个文件目录下Makefile的写法(14934)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/Anker/p/3263780.html">1. IO多路复用之epoll总结(14)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3265058.html">2. select、poll、epoll之间的区别总结[整理](13)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3271773.html">3. 孤儿进程与僵尸进程[总结](10)</a></li><li><a href="http://www.cnblogs.com/Anker/archive/2013/03/04/2943498.html">4. 递归与尾递归总结(9)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3258674.html">5. IO多路复用之select总结(9)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/Anker/p/3265058.html">1. select、poll、epoll之间的区别总结[整理](19)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3254269.html">2. 网络IO之阻塞、非阻塞、同步、异步总结(15)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3258674.html">3. IO多路复用之select总结(13)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3271773.html">4. 孤儿进程与僵尸进程[总结](10)</a></li><li><a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html">5. 《算法导论》读书笔记之第13章 红黑树(10)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2015 Anker's Blog
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>

@@ -1,0 +1,1339 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0060)http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/bundle-iMetro_HD.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/Anker/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/Anker/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/Anker/wlwmanifest.xml">
+<script type="text/javascript" src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/encoder.js"></script><script src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'Anker', cb_enable_mathjax=false;</script>
+<script src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/blog-common.js" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/Anker/"><img id="blogLogo" src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/Anker/">Anker—学习成长笔记</a></h1>
+<h2>关注数据存储、文件系统</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="MyLinks1_HomeLink" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="MyLinks1_MyHomeLink" class="menu" href="http://www.cnblogs.com/Anker/">首页</a></li>
+<li><a id="MyLinks1_NewPostLink" class="menu" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="MyLinks1_ContactLink" class="menu" rel="nofollow" href="http://msg.cnblogs.com/send/Anker%26%2339%3Bs%20Blog">联系</a></li>
+<li><a id="MyLinks1_Syndication" class="menu" href="http://www.cnblogs.com/Anker/rss">订阅</a>
+<!--<a id="MyLinks1_XMLLink" class="aHeaderXML" href="http://www.cnblogs.com/Anker/rss"><img src="http://www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="MyLinks1_Admin" class="menu" rel="nofollow" href="http://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			
+<!--done-->
+随笔- 138&nbsp;
+文章- 2&nbsp;
+评论- 259&nbsp;
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园.htm">《算法导论》读书笔记之第13章 红黑树</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><strong>摘要：</strong></p>
+<p>　　红黑树是一种二叉查找树，但在每个结点上增加了一个存储位表示结点的颜色，可以是RED或者BLACK。通过对任何一条从根到叶子的路径上各个着色方式的限制，红黑树确保没有一条路径会比其他路径长出两倍，因而是接近平衡的。本章主要介绍了红黑树的性质、左右旋转、插入和删除。重点分析了在红黑树中插入和删除元素的过程，分情况进行详细讨论。一棵高度为h的二叉查找树可以实现任何一种基本的动态集合操作，如SEARCH、PREDECESSOR、SUCCESSOR、MIMMUM、MAXMUM、INSERT、DELETE等。当二叉查找树的高度较低时，这些操作执行的比较快，但是当树的高度较高时，这些操作的性能可能不比用链表好。红黑树（red-black tree）是一种平衡的二叉查找树，它能保证在最坏情况下，基本的动态操作集合运行时间为O(lgn)。本章内容有些复杂，看了两天，才大概清楚其插入和删除过程，日后需要经常回顾，争取完全消化掉。红黑树的用途非常广泛，例如STL中的map就是采用红黑树实现的，效率非常之高，有机会可以研究一下STL的源代码。</p>
+<p><strong>1、红黑树的性质</strong></p>
+<p>　　红黑树中的每个结点包含五个域：color、key、left、right和parent。如果某结点没有一个子结点或父结点，则该结点相应的指针parent域包含值为NIL（NIL并是是空指针，此处有些迷惑，一会解释）。把NIL视为指向红黑树的外结点（叶子）的指针，而把带关键字的结点视为红黑树的内结点。红黑树结点结构如下所示：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 15px;"><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">#define</span> RED  0
+<span style="color: #008080;"> 2</span> <span style="color: #0000ff;">#define</span> BLACK 1
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">struct</span><span style="color: #000000;"> RedBlackTreeNode
+</span><span style="color: #008080;"> 4</span> <span style="color: #000000;">{ 
+</span><span style="color: #008080;"> 5</span> <span style="color: #000000;">    T key;
+</span><span style="color: #008080;"> 6</span>     <span style="color: #0000ff;">struct</span> RedBlackTreeNode *<span style="color: #000000;"> parent;
+</span><span style="color: #008080;"> 7</span>     <span style="color: #0000ff;">struct</span> RedBlackTreeNode *<span style="color: #000000;"> left;
+</span><span style="color: #008080;"> 8</span>     <span style="color: #0000ff;">struct</span> RedBlackTreeNode *<span style="color: #000000;"> right;
+</span><span style="color: #008080;"> 9</span>     <span style="color: #0000ff;">int</span><span style="color: #000000;"> color;
+</span><span style="color: #008080;">10</span> };</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>红黑树的性质如下：</p>
+<p><strong><span style="color: #ff00ff;">（1）每个结点或是红色，或是黑色。</span></strong></p>
+<p><strong><span style="color: #ff00ff;">（2）根结点是黑色。</span></strong></p>
+<p><strong><span style="color: #ff00ff;">（3）每个叶子结点（NIL）是黑色。</span></strong></p>
+<p><strong><span style="color: #ff00ff;">（4）如果有一个结点是红色，则它的两个儿子都是黑色。</span></strong></p>
+<p><strong><span style="color: #ff00ff;">（5）对每个结点，从该结点到其孙子结点的所有路径上包含相同数目的黑色结点。</span></strong></p>
+<p>如下图是一棵红黑树：</p>
+<p><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30173608-ccdbf138e6114c9ea8044bae6e4e6228.png" alt=""></p>
+<p>从图可以看出NIL不是空指针，而是一个叶子结点。实际操作的时候可以将NIL视为哨兵，这样便于对黑红色进行操作。红黑树的操作主要是对内部结点操作，因为内部结点存储了关键字的值。书中为了便于讨论，忽略了叶子结点的，如是上图红黑树变成如下图所示：<img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30105123-02fcaf1681fa45f98f284f43cdd4b6a4.png" alt=""></p>
+<p>　　书中给出了黑高度的概念：<span style="color: #0000ff;"><strong>从某个结点x出发（不包含该结点）到达一个叶子结点的任意一条路径上，黑色结点的个数称为该结点的黑高度。</strong></span>由红黑树的性质（5）可知，从该结点出发的所有下降路径都有相同的黑色结点个数。红黑树的黑高度定义为其根结点的黑高度。</p>
+<p>　　书中给出了一个引理来说明为什么红黑树是一种好的查找树，并对引理进行了证明（采用归纳法进行证明的，需要很强的归纳推理知识，正是我的不足之处，看书的痛苦在于此）。</p>
+<p><span style="color: #0000ff;"><strong>引理：一棵有n个内结点的红黑树的高度之多为2lg(n+1)。</strong></span></p>
+<p><strong>2、旋转</strong></p>
+<p>　　在红黑树上进行结点插入和删除操作时，会改变树的结构形状，导致结果可能不满足了红黑树的某些性质，为了保证每次插入和删除操作后，仍然能报维持红黑树的性质，需要改变树中某些结点的颜色和指针结构。其中的指针结构的改变通过旋转完成的。书中给出了两种旋转：左旋转和右旋转。如下图是旋转过程：</p>
+<p><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30111210-d121635efcac4b8aabf9754fafcafc39.png" alt=""></p>
+<p>　　从图可以得出左右旋转的过程，假设对某个结点x进行左旋转，y是x的右孩子，则左旋转过程为：以x和y之间的链为“支轴”进行的，使得x的右孩子为y的左孩子，y的父节点为x的父节点，y的左孩子为x。书中给出了左旋转的伪代码如下：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 15px;"><span style="color: #008080;"> 1</span> <span style="color: #000000;">LEFT_ROTATE(T,x)
+</span><span style="color: #008080;"> 2</span>    y = right[x]   <span style="color: #008000;">//</span><span style="color: #008000;">获取右孩子</span>
+<span style="color: #008080;"> 3</span>    rihgt[x] = left[y]  <span style="color: #008000;">//</span><span style="color: #008000;">设置x的右孩子为y的左孩子</span>
+<span style="color: #008080;"> 4</span>    <span style="color: #0000ff;">if</span> left[y] !=<span style="color: #000000;"> NIL
+</span><span style="color: #008080;"> 5</span>        then parent[left[x]] =<span style="color: #000000;"> x
+</span><span style="color: #008080;"> 6</span>     parent[y] = parent[x]  <span style="color: #008000;">//</span><span style="color: #008000;">设置y的父节点为x的父节点</span>
+<span style="color: #008080;"> 7</span>     <span style="color: #0000ff;">if</span> parent[x] ==<span style="color: #000000;"> NIL
+</span><span style="color: #008080;"> 8</span>        then root[T] =<span style="color: #000000;"> y
+</span><span style="color: #008080;"> 9</span>        <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> x==<span style="color: #000000;">left[parent[x]
+</span><span style="color: #008080;">10</span>               then left[parent[x]] =<span style="color: #000000;"> y
+</span><span style="color: #008080;">11</span>               <span style="color: #0000ff;">else</span>  right[[parent[x]] =<span style="color: #000000;"> y
+</span><span style="color: #008080;">12</span>     left[y] = x  <span style="color: #008000;">//</span><span style="color: #008000;">设置y的左孩子为x</span>
+<span style="color: #008080;">13</span>     parent[x] =<span style="color: #000000;">y
+</span><span style="color: #008080;">14</span> 
+<span style="color: #008080;">15</span>    </span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>假设对某个结点y进行右旋转，x是y的左孩子，则左旋转过程为：y的左孩子设置为x的右孩子，将x的父节点设置为y的父节点，x的右孩子设置为y。书中并没有给出右旋转的伪代码，参照左旋转的伪代码很容易实现：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 15px;"><span style="color: #008080;"> 1 </span> <span style="color: #000000;">RIGHT_ROTATE(T,y)
+</span><span style="color: #008080;"> 2</span>      x = left[y]    <span style="color: #008000;">//</span><span style="color: #008000;">获取左孩子</span>
+<span style="color: #008080;"> 3</span>      left[y] = right[x] <span style="color: #008000;">//</span><span style="color: #008000;">设置y的左孩子为x的右孩子</span>
+<span style="color: #008080;"> 4</span>      <span style="color: #0000ff;">if</span> right[x] !=<span style="color: #000000;"> NIL
+</span><span style="color: #008080;"> 5</span>         then parent[right[x]] =<span style="color: #000000;"> y
+</span><span style="color: #008080;"> 6</span>      parent[x] = parent[y]  <span style="color: #008000;">//</span><span style="color: #008000;">设为x的父节点为y的父结点</span>
+<span style="color: #008080;"> 7</span>      <span style="color: #0000ff;">if</span> parent[y] ==<span style="color: #000000;"> NIL
+</span><span style="color: #008080;"> 8</span>          then root =<span style="color: #000000;"> x
+</span><span style="color: #008080;"> 9</span>          <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> y==<span style="color: #000000;"> left[parent[y]]
+</span><span style="color: #008080;">10</span>                then left[parent[y]] =<span style="color: #000000;"> x
+</span><span style="color: #008080;">11</span>                <span style="color: #0000ff;">else</span>  right[parent[y]] =<span style="color: #000000;"> x
+</span><span style="color: #008080;">12</span>      right[x] = y <span style="color: #008000;">//</span><span style="color: #008000;">设置x的右孩子为y</span>
+<span style="color: #008080;">13</span>      parent[y] = x</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>&nbsp;为了更好的理解旋转操作，书中给出了一个左旋转的例如，如下图所示：<img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30173822-22ede8f17f9b4179a8525a6738000fff.png" alt=""></p>
+<p><strong>3、插入</strong></p>
+<p>　　红黑树插入一个新结点的过程RB_INSERT是在二叉查找树插入过程的基础上改进的，先按照二叉排序的插入过程插入到红黑树中，然后将新插入的结点标记为红色（疑问：为什么是红色，而不是黑色呢？），然后调用一个辅助的过程RB_INSERT_FIXUP来调整结点并重新着色，使得满足红黑树的性质。关于二叉查找树的插入过程可以参考上一篇日志：<a href="http://www.cnblogs.com/Anker/archive/2013/01/28/2880581.html">http://www.cnblogs.com/Anker/archive/2013/01/28/2880581.html</a>。书中给出了RB_INSERT的伪代码：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 15px;"><span style="color: #008080;"> 1</span> <span style="color: #000000;">RB_INSERT(T,z)
+</span><span style="color: #008080;"> 2</span>   y =<span style="color: #000000;"> NIL
+</span><span style="color: #008080;"> 3</span>   x =<span style="color: #000000;">root(T)
+</span><span style="color: #008080;"> 4</span>   <span style="color: #0000ff;">while</span> x !=<span style="color: #000000;"> NIL
+</span><span style="color: #008080;"> 5</span>        <span style="color: #0000ff;">do</span> y=<span style="color: #000000;">x
+</span><span style="color: #008080;"> 6</span>            <span style="color: #0000ff;">if</span> key[z]&lt;<span style="color: #000000;">key[x]
+</span><span style="color: #008080;"> 7</span>              then x=<span style="color: #000000;">left[x]
+</span><span style="color: #008080;"> 8</span>              <span style="color: #0000ff;">else</span>  x=<span style="color: #000000;">right[x]
+</span><span style="color: #008080;"> 9</span>   parent[z] =<span style="color: #000000;"> y
+</span><span style="color: #008080;">10</span>   <span style="color: #0000ff;">if</span> y =<span style="color: #000000;">NIL
+</span><span style="color: #008080;">11</span>      then root =<span style="color: #000000;">z
+</span><span style="color: #008080;">12</span>      <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> key[z] &lt;<span style="color: #000000;"> key[y]
+</span><span style="color: #008080;">13</span>             then left[y] =<span style="color: #000000;">z
+</span><span style="color: #008080;">14</span>             <span style="color: #0000ff;">else</span>  right[y] =<span style="color: #000000;">z
+</span><span style="color: #008080;">15</span>    left[z] =<span style="color: #000000;"> NIL
+</span><span style="color: #008080;">16</span>    right[z] =<span style="color: #000000;">NIL
+</span><span style="color: #008080;">17</span>    color[z] = RED  <span style="color: #008000;">//</span><span style="color: #008000;">新插入结点标记为红色</span>
+<span style="color: #008080;">18</span>    RB_INSERT_FIXUP(T,z)  <span style="color: #008000;">//</span><span style="color: #008000;">进行调整，使得满足红黑树性质</span></span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>　　红黑树的插入过程最主要的是RB_INSERT_FIXUP过程，书中发了很大的篇幅进行介绍。首先分析了当插入一个新的结点后，会破坏红黑树的哪些性质，然后针对可能的破坏性质进行分类讨论并给出了给出了解决办法。因为每次插入的新元素标记为RED，这样可能性质2（根节点为黑色）和性质4（一个红结点的左右孩子都是黑色的）被破坏。例如下图插入一个新结点，破坏了性质4。<img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30120825-0c49f3957da34214b39672081d204be2.png" alt=""></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如果每次插入新的结点z导致红黑树性质被破坏，则之多只有一个性质被破坏，并且不是性质2就是性质4。违反性质2是因为z是根且为红色，违反性质4是因为z和其父节点parent[z]都是红色的。</p>
+<p>　　如果性质2被违反了，则红色的根必定是新增的结点z，它是树中唯一的内结点，由于z的父接点和两个子女都是NIL（黑色），不违反性质4。违反性质2在整个插入过程中只有这一次。所以对于违反性质2的结点，直接将其结点变成黑色即可。</p>
+<p>　　剩下的问题是对于违反性质4的处理，在插入新结点z之前，红黑树的性质没有被破坏。插入结点z后违反性质4，必定是因为z和其父亲结点parent[z]都是红色的，此时只违反性质4，而没有违反其他性质。假设新插入结点z，导致红黑树性质4被破坏，此时z和其父节点parent[z]都是红色，由于在插入结点z之前红黑树的性质没有被破坏，parent[z]是红色，很容易推出z的祖父结点parent[parent[z]]必定是黑色。此时根据parent[z]是parent[parent[z]]的左孩子还是右孩子进行讨论。因为左右之间是对称的，书中只给出了parent[z]作为parent[parent[z]]的左孩子进行讨论的，然后给出了三种可能的情况。</p>
+<p><span style="color: #0000ff;"><strong>情况1）：z的叔叔结点y是红色的</strong></span></p>
+<p>　　此时parent[z]和y都是红色的，解决办法是将z的父节点parent[z]和叔叔结点y都着为黑色，而将z的祖父结点parent[parent[z]]着为红色，然后从祖父结点parent[parent[z]]继续向上判断是否破坏红黑树的性质。处理过程如下图所示：<img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30173947-1d6c9bf6fda84a199f44a91110e8d3e1.png" alt=""></p>
+<p><span style="color: #0000ff;"><strong>情况2）：z的叔叔y是黑色的，而且z是右孩子</strong></span></p>
+<p><span style="color: #0000ff;"><strong>情况3）：z的叔叔y是黑色的，而且z是左孩子</strong></span></p>
+<p>　　情况2和情况3中y都是黑色的，通过z是左孩子还是右孩子进行区分的。可以将情况2通过旋转为情况3。情况2中z是右孩子，旋转后成为情况3，使得z变为左孩子，可以在parent[z]结点出使用一次左旋转来完成。无论是间接还是直接的通过情况2进入到情况3，z的叔叔y总是黑色的。在情况3中，将parent[z]着为黑色，parent[parent[z]]着为红色，然后从parent[parent[z]]处进行一次右旋转。情况2、3修正了对性质4的违反，修正过程不会导致其他的红黑性质被破坏。修正过程如下图所示：</p>
+<p><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30174315-4dc4e83c1fe2445199125797a8948fbe.png" alt=""></p>
+<p>　　给一个完整的例子来说明插入过程，如下图所示：<img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30181604-3209c45a80b1425ca4e8af520105bc6e.png" alt=""></p>
+<p>　　书中给出了RB_INSERT_FIXUP的伪代码，伪代码中只给出了z的父节点为左孩子的情况，为右孩子的情况与左孩子的情况是对称的，只需将左孩子中的right换成left即可。</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080;"> 1</span> <span style="color: #000000;">RB_INSERT_FIXUP(T,z)
+</span><span style="color: #008080;"> 2</span>          <span style="color: #0000ff;">while</span> color[parent[z]] =<span style="color: #000000;"> RED
+</span><span style="color: #008080;"> 3</span>            <span style="color: #0000ff;">do</span> <span style="color: #0000ff;">if</span> parent[z] ==<span style="color: #000000;"> left[parent[parent[z]]]
+</span><span style="color: #008080;"> 4</span>                   then y =<span style="color: #000000;"> right[parent[parent[z]]]
+</span><span style="color: #008080;"> 5</span>                        <span style="color: #0000ff;">if</span> color[y] == RED    <span style="color: #008000;">//</span><span style="color: #008000;">情况1，z的叔叔为红色</span>
+<span style="color: #008080;"> 6</span>                             then color[parent[z]] =<span style="color: #000000;"> BLACK
+</span><span style="color: #008080;"> 7</span>                                  color[y] =<span style="color: #000000;"> BLACK
+</span><span style="color: #008080;"> 8</span>                                  color[parent[parent[z]]=RED<span style="color: #008080;"> <br>9</span>                                   z=<span style="color: #000000;"> parent[parent[z]]
+</span><span style="color: #008080;">10</span>                                  <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> z == right[parent[z]]    <span style="color: #008000;">//</span><span style="color: #008000;">情况2，z的叔叔为黑色，z为右孩子</span>
+<span style="color: #008080;">11</span>                                        then z =<span style="color: #000000;"> parent[z]
+</span><span style="color: #008080;">12</span> <span style="color: #000000;">                                            LEFT_ROTATE(T,z)
+</span><span style="color: #008080;">13</span>                                         color[parent[z]]=BLACK    <span style="color: #008000;">//</span><span style="color: #008000;">情况3，z的叔叔为黑色，z为左孩子</span>
+<span style="color: #008080;">14</span>                                         color[parent[parent[z]] =<span style="color: #000000;"> RED
+</span><span style="color: #008080;">15</span> <span style="color: #000000;">                                        RIGHT_ROTATE(T, parent[parent[z]])
+</span><span style="color: #008080;">16</span>                  <span style="color: #0000ff;">else</span> (same <span style="color: #0000ff;">as</span><span style="color: #000000;"> then clause with “right” and “left” exchanged)
+</span><span style="color: #008080;">17</span>    color(root(T)) = BLACK; <span style="color: #008000;">//</span><span style="color: #008000;">将根结点设置为黑色</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>4、删除</strong></p>
+<p>　　&nbsp;删除过程最复杂，看了好多遍才明白个大概，需要反复看，多想删除过程中会破坏哪些性质，然后又针对性的去调整。</p>
+<p>　　红黑树删除结点过程是在二叉查找树删除结点过程的基础改进的。与二叉查找树类似，删除的结点分为三种情况：&lt;1&gt;无左右孩子、&lt;2&gt;有左孩子或者右孩子、&lt;3&gt;既有树=左孩子又有右孩子。删除过程可以参考前一篇日志：<a href="http://www.cnblogs.com/Anker/archive/2013/01/28/2880581.html">http://www.cnblogs.com/Anker/archive/2013/01/28/2880581.html</a>。红黑树在删除结点后需要检查是否破坏了红黑树的性质。如果删除的结点y是红色的，则删除后的树仍然是保持红黑树的性质，因为树中各个结点的黑高度没有改变，不存在两个相邻（父结点和子结点）的红色结点，y是红色不可能是根，所有根仍然是黑色。如果删除的结点z是黑色的，则这个是破坏了红黑树的性质，需要调用RB_DELETE_FIXUP进行调整。从删除结点y的唯一孩子结点x或者是NIL处开始调整。书中给出了RB_DELETE的伪代码：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 15px;"><span style="color: #008080;"> 1</span> <span style="color: #000000;">RB_DELETE(T,z)
+</span><span style="color: #008080;"> 2</span>      <span style="color: #0000ff;">if</span> left[z] ==NIL or right[z] ==<span style="color: #000000;"> NIL
+</span><span style="color: #008080;"> 3</span>         then y=<span style="color: #000000;">z
+</span><span style="color: #008080;"> 4</span>         <span style="color: #0000ff;">else</span>  y=<span style="color: #000000;">TREE_SUCCESSOR(z)
+</span><span style="color: #008080;"> 5</span>     <span style="color: #0000ff;">if</span> left[y] !=<span style="color: #000000;"> NIL
+</span><span style="color: #008080;"> 6</span>         then x=<span style="color: #000000;">left[y]
+</span><span style="color: #008080;"> 7</span>         <span style="color: #0000ff;">else</span>  x=<span style="color: #000000;">right[y]
+</span><span style="color: #008080;"> 8</span>     parent[x] =<span style="color: #000000;"> parent[y]
+</span><span style="color: #008080;"> 9</span>     <span style="color: #0000ff;">if</span> p[y] ==<span style="color: #000000;">NIL
+</span><span style="color: #008080;">10</span>        then root[T] =<span style="color: #000000;">x
+</span><span style="color: #008080;">11</span>        <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> y =<span style="color: #000000;"> left[[prarnt[y]]
+</span><span style="color: #008080;">12</span>                    then left[parent[y]] =<span style="color: #000000;"> x
+</span><span style="color: #008080;">13</span>                    <span style="color: #0000ff;">else</span>  right[parent[y]] =<span style="color: #000000;">x
+</span><span style="color: #008080;">14</span>      <span style="color: #0000ff;">if</span> y!=<span style="color: #000000;">z
+</span><span style="color: #008080;">15</span>          then key[z] =<span style="color: #000000;"> key[y]
+</span><span style="color: #008080;">16</span>                copy y<span style="color: #800000;">'</span><span style="color: #800000;">s data into z</span>
+<span style="color: #008080;">17</span>      <span style="color: #0000ff;">if</span> color[y] == BLACK    <span style="color: #008000;">//</span><span style="color: #008000;">当被删除结点为黑色时候进行调整</span>
+<span style="color: #008080;">18</span> <span style="color: #000000;">         then RB_DELETE_FIXUP(T,x)
+</span><span style="color: #008080;">19</span>       <span style="color: #0000ff;">return</span> y</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>　　书中分析了被删除结点y是黑色会产生的问题：首先，如果y是根，而y的一个红色孩子变成了新根，则违反了性质2。其次，如果x和parent[y]（此时parent[x] = parent[y]）都是红色，就违反了性质4。第三，删除y将会导致先前包含y的任何路径上黑结点个数减少1，违反了性质5。书中给出了解决第三个问题的办法：将结点x设为还有额外的一重黑色（此处看的不是很明白，我的理解是是不管是x是什么颜色，将x增加了额外一重黑色，这样可以保证黑结点数目增加1个），即将任意包含结点x的路径上黑结点个数加1，这样可以保证性质5成立。当将黑色结点y被删除时，将其黑色“下推”至其子结点，导致问题变成为结点x可能即不是红，又不是黑，从而违反性质1。因为给x增加了一种颜色，即结点x是双重黑色或者是红黑色。这样就分别给包含x的路径上黑结点个数贡献2个或1个。但是x的color属性仍然是RED（如果x是红黑的）或BLACK（如果x是双重黑色）。换而言之，一个结点额外的黑色反映在x指向它，而不是它的color属性。</p>
+<p>　　过程RB_DELETE_FIXUP恢复性质1，2，4。对于恢复性质2、4很简单，因为x是红色，所有直接将x结点着为黑色即可。书中着重介绍了如何恢复性质1。此时x是黑色，需要根据x是左孩子还是右孩子两种情况进行恢复，因为左右是对称的，书中只给出了x是左孩子的恢复过程。将x作为第一个额外的黑色结点，从x结点开始循环，将额外的黑色结点沿着树向上移，直到：</p>
+<p><span style="color: #0000ff;"><strong>（1）x指向一个红黑结点，此时将x单独着为黑色。</strong></span></p>
+<p><span style="color: #0000ff;"><strong>（2）x指向根，这时可以简单地消除那个额外的黑色，或者</strong></span></p>
+<p><span style="color: #0000ff;"><strong>（3）做必要的旋转和颜色改变</strong></span></p>
+<p>在循环过程中，x总是指向具有双重黑色的那个非根结点。设w是x的兄弟结点，因为x是双重黑色的，故w不可能是NIL。书中分四种情况讨论：</p>
+<p><span style="color: #0000ff;"><strong>情况1：x的兄弟w是红色的</strong></span></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 此时因为x是双重黑色，贡献两个黑色结点，所有w必有黑色孩子。此时将w着为黑色，parent[x]为红色，在对parent[x]做一次左旋转。此时x的新兄弟w是黑色，这样将情况1转换为情况2、3或4。情况1的处理过程下图所示：<img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30180302-66df5384090d4b0c83aa5d778fd828de.png" alt=""></p>
+<p><span style="color: #0000ff;"><strong>情况2：x的兄弟w是黑色的，而且w的两个孩子都是黑色的。</strong></span></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;处理过程是从x和w上去掉一重黑色，即x只有一重黑色而w着为红色，给x的父节点parent[x]添加额外黑色。处理过程如下图所示：<img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30182009-4008151075824d8498486d765cac4948.png" alt=""></p>
+<p>&nbsp;</p>
+<p><span style="color: #0000ff;"><strong>情况3：x的兄弟w是黑色的，w的左孩子是红色的，右孩子是黑色的</strong></span></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交换w和其左孩子left[w]的颜色，并对w进行右旋转。旋转后x的新兄弟w是一个有红色右孩子的黑结点，转换成了情况4。处理过程如下图所示：<img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30182257-e05943baf65d44ebb049b8cbedb966b0.png" alt=""></p>
+<p><span style="color: #0000ff;"><strong>情况4：x的兄弟w是黑色的，而且w的右孩子是红色的。</strong></span></p>
+<p>　　执行过程是将w的颜色设置为parent[x]的颜色，将parent[x]的颜色设置为黑色，将w的右孩子着为黑色，然后在parent[x]做一次右旋，最后将x设置为根root。处理过程如下图所示：</p>
+<p><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30182353-eb373e15630a47c7828bfa5b68ac7c34.png" alt=""></p>
+<p>书中给出了RB_DELETE_FIXUP的伪代码：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080;"> 1</span> <span style="color: #000000;">RB_DELETE_FIXUP(T,x)
+</span><span style="color: #008080;"> 2</span>  　　<span style="color: #0000ff;">while</span> x!= root[T] and color[x] ==<span style="color: #000000;">BLACK
+</span><span style="color: #008080;"> 3</span>          <span style="color: #0000ff;">do</span> <span style="color: #0000ff;">if</span> x ==<span style="color: #000000;"> left[parent[x]]
+</span><span style="color: #008080;"> 4</span>                then w =<span style="color: #000000;"> right[parent[x]]
+</span><span style="color: #008080;"> 5</span>                     <span style="color: #0000ff;">if</span> color[w] == RED  <span style="color: #008000;">//</span><span style="color: #008000;">case 1 x的兄弟w是红色的</span>
+<span style="color: #008080;"> 6</span>                        then color[w] =<span style="color: #000000;"> BLACK
+</span><span style="color: #008080;"> 7</span>                             color[parent[x]] =<span style="color: #000000;"> RED
+</span><span style="color: #008080;"> 8</span> <span style="color: #000000;">                            LEFT_ROTATE(T,PARENT[x])
+</span><span style="color: #008080;"> 9</span>                             w =<span style="color: #000000;"> right[parent[x]]
+</span><span style="color: #008080;">10</span>                        <span style="color: #0000ff;">if</span> color[left[w]] == BLACK and color[right[w]] =<span style="color: #000000;"> BLACK
+</span><span style="color: #008080;">11</span>                        　　 then color[w] = RED  <span style="color: #008000;">//</span><span style="color: #008000;">case 2</span>
+<span style="color: #008080;">12</span>                             x =<span style="color: #000000;"> parent[x]
+</span><span style="color: #008080;">13</span>                            <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> color[right[w]] =<span style="color: #000000;">BLACK
+</span><span style="color: #008080;">14</span>                                   then color[left[w]] = BLACK <span style="color: #008000;">//</span><span style="color: #008000;">case 3</span>
+<span style="color: #008080;">15</span>                                        color[w] =<span style="color: #000000;"> RED
+</span><span style="color: #008080;">16</span> <span style="color: #000000;">                                       RIGHT_ROTATE(T,w)
+</span><span style="color: #008080;">17</span>                                        w =<span style="color: #000000;"> right[parent[x]]
+</span><span style="color: #008080;">18</span>                                color[w] = color[parent[x]] <span style="color: #008000;">//</span><span style="color: #008000;">case 4</span>
+<span style="color: #008080;">19</span>                                color[parent[x]] =<span style="color: #000000;"> BLACK
+</span><span style="color: #008080;">20</span>                                color[right[w]] =<span style="color: #000000;"> BLACK
+</span><span style="color: #008080;">21</span> <span style="color: #000000;">                               LEFT_ROTATE(T,parent[x])
+</span><span style="color: #008080;">22</span>                                x=<span style="color: #000000;">root(T)
+</span><span style="color: #008080;">23</span>              <span style="color: #0000ff;">else</span>(same <span style="color: #0000ff;">as</span><span style="color: #000000;"> then clasue with “right” and “left” exchanged)
+</span><span style="color: #008080;">24</span>      color[x]=BLACK</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><strong>5、编程实现</strong></p>
+<p>　　这一章看了两天，宏观上把握了红黑树的插入和删除操作，中间还有细节问题需要思考。看完后要实现才能消化，于是我采用C++语言设计了简单的红黑树结点和红黑树类，设计的类如下所示：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="font-size: 15px;"><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">int</span> RED = <span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 2</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">int</span> BLACK = <span style="color: #800080;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 3</span> 
+<span style="color: #008080;"> 4</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;"> 5</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> RedBlackTreeNode
+</span><span style="color: #008080;"> 6</span> <span style="color: #000000;">{
+</span><span style="color: #008080;"> 7</span> <span style="color: #0000ff;">public</span><span style="color: #000000;">:
+</span><span style="color: #008080;"> 8</span> <span style="color: #000000;">    RedBlackTreeNode():key(T()),parent(NULL),left(NULL),right(NULL),color(BLACK){}
+</span><span style="color: #008080;"> 9</span> <span style="color: #000000;">    T key;
+</span><span style="color: #008080;">10</span>     RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> parent;
+</span><span style="color: #008080;">11</span>     RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> left;
+</span><span style="color: #008080;">12</span>     RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> right;
+</span><span style="color: #008080;">13</span>     <span style="color: #0000ff;">int</span><span style="color: #000000;"> color;
+</span><span style="color: #008080;">14</span> <span style="color: #000000;">};
+</span><span style="color: #008080;">15</span> 
+<span style="color: #008080;">16</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">17</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> RedBlackTree
+</span><span style="color: #008080;">18</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">19</span> <span style="color: #0000ff;">public</span><span style="color: #000000;">:
+</span><span style="color: #008080;">20</span> <span style="color: #000000;">    RedBlackTree();
+</span><span style="color: #008080;">21</span>     <span style="color: #0000ff;">int</span> search_element(<span style="color: #0000ff;">const</span> T&amp; k) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">22</span>     <span style="color: #0000ff;">int</span> get_minmum(T&amp; retmin)<span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">23</span>     <span style="color: #0000ff;">int</span> get_maxmum(T&amp; retmax)<span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">24</span>     <span style="color: #0000ff;">int</span> get_successor(<span style="color: #0000ff;">const</span> T&amp; k,T&amp; ret) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">25</span>     <span style="color: #0000ff;">int</span> get_predecessor(<span style="color: #0000ff;">const</span> T&amp; k,T&amp; ret) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">26</span>     <span style="color: #0000ff;">int</span> insert_key(<span style="color: #0000ff;">const</span> T&amp;<span style="color: #000000;"> k);
+</span><span style="color: #008080;">27</span>     <span style="color: #0000ff;">int</span> delete_key(<span style="color: #0000ff;">const</span> T&amp;<span style="color: #000000;"> k);
+</span><span style="color: #008080;">28</span>     <span style="color: #0000ff;">void</span> inorder_tree_walk()<span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">29</span>     RedBlackTreeNode&lt;T&gt;* get_root() <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">30</span>     ~<span style="color: #000000;">RedBlackTree();
+</span><span style="color: #008080;">31</span> <span style="color: #0000ff;">private</span><span style="color: #000000;">:
+</span><span style="color: #008080;">32</span>     RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> root;
+</span><span style="color: #008080;">33</span>     <span style="color: #0000ff;">static</span>  RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">NIL;
+</span><span style="color: #008080;">34</span>     RedBlackTreeNode&lt;T&gt;* get_parent(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">35</span>     RedBlackTreeNode&lt;T&gt;* get_left(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">36</span>     RedBlackTreeNode&lt;T&gt;* get_right(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">37</span>     T get_key(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">38</span>     <span style="color: #0000ff;">int</span> get_color(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">39</span>     <span style="color: #0000ff;">void</span> set_color(RedBlackTreeNode&lt;T&gt;* pnode,<span style="color: #0000ff;">int</span><span style="color: #000000;"> color);
+</span><span style="color: #008080;">40</span>     <span style="color: #0000ff;">void</span> left_rotate(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode);
+</span><span style="color: #008080;">41</span>     <span style="color: #0000ff;">void</span> right_rotate(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode);
+</span><span style="color: #008080;">42</span>     <span style="color: #0000ff;">void</span> rb_insert_fixup(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode);
+</span><span style="color: #008080;">43</span>     <span style="color: #0000ff;">void</span> rb_delete_fixup(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode);
+</span><span style="color: #008080;">44</span>     RedBlackTreeNode&lt;T&gt;* get_maxmum(RedBlackTreeNode&lt;T&gt; *root) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">45</span>     RedBlackTreeNode&lt;T&gt;* get_minmum(RedBlackTreeNode&lt;T&gt; *root) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">46</span>     RedBlackTreeNode&lt;T&gt;* get_successor(RedBlackTreeNode&lt;T&gt; *pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">47</span>     RedBlackTreeNode&lt;T&gt;* get_predecessor(RedBlackTreeNode&lt;T&gt; *pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">48</span>     RedBlackTreeNode&lt;T&gt;* search_tree_node(<span style="color: #0000ff;">const</span> T&amp; k)<span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;">49</span>     <span style="color: #0000ff;">void</span> make_empty(RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> root);
+</span><span style="color: #008080;">50</span> };</span></pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>设计过程中采用了C++的模板类型，这样可以支持多种数据类型，使得程序具备扩展性，完整的程序实现如下所示：</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show(&#39;a0044fec-75e6-4cbd-a524-7e24eaee165b&#39;)"><img id="code_img_closed_a0044fec-75e6-4cbd-a524-7e24eaee165b" class="code_img_closed" src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/ContractedBlock.gif" alt=""><img id="code_img_opened_a0044fec-75e6-4cbd-a524-7e24eaee165b" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide(&#39;a0044fec-75e6-4cbd-a524-7e24eaee165b&#39;,event)" src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/ExpandedBlockStart.gif" alt=""><span class="cnblogs_code_collapse">View Code </span>
+<div id="cnblogs_code_open_a0044fec-75e6-4cbd-a524-7e24eaee165b" class="cnblogs_code_hide">
+<pre><span style="color: #008080;">  1</span> #include &lt;iostream&gt;
+<span style="color: #008080;">  2</span> #include &lt;stack&gt;
+<span style="color: #008080;">  3</span> <span style="color: #0000ff;">using</span> <span style="color: #0000ff;">namespace</span><span style="color: #000000;"> std;
+</span><span style="color: #008080;">  4</span> 
+<span style="color: #008080;">  5</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">int</span> RED = <span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;">  6</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">int</span> BLACK = <span style="color: #800080;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;">  7</span> 
+<span style="color: #008080;">  8</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">  9</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> RedBlackTreeNode
+</span><span style="color: #008080;"> 10</span> <span style="color: #000000;">{
+</span><span style="color: #008080;"> 11</span> <span style="color: #0000ff;">public</span><span style="color: #000000;">:
+</span><span style="color: #008080;"> 12</span> <span style="color: #000000;">    RedBlackTreeNode():key(T()),parent(NULL),left(NULL),right(NULL),color(BLACK){}
+</span><span style="color: #008080;"> 13</span> <span style="color: #000000;">    T key;
+</span><span style="color: #008080;"> 14</span>     RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> parent;
+</span><span style="color: #008080;"> 15</span>     RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> left;
+</span><span style="color: #008080;"> 16</span>     RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> right;
+</span><span style="color: #008080;"> 17</span>     <span style="color: #0000ff;">int</span><span style="color: #000000;"> color;
+</span><span style="color: #008080;"> 18</span> <span style="color: #000000;">};
+</span><span style="color: #008080;"> 19</span> 
+<span style="color: #008080;"> 20</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;"> 21</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> RedBlackTree
+</span><span style="color: #008080;"> 22</span> <span style="color: #000000;">{
+</span><span style="color: #008080;"> 23</span> <span style="color: #0000ff;">public</span><span style="color: #000000;">:
+</span><span style="color: #008080;"> 24</span> <span style="color: #000000;">    RedBlackTree();
+</span><span style="color: #008080;"> 25</span>     <span style="color: #0000ff;">int</span> search_element(<span style="color: #0000ff;">const</span> T&amp; k) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 26</span>     <span style="color: #0000ff;">int</span> get_minmum(T&amp; retmin)<span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 27</span>     <span style="color: #0000ff;">int</span> get_maxmum(T&amp; retmax)<span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 28</span>     <span style="color: #0000ff;">int</span> get_successor(<span style="color: #0000ff;">const</span> T&amp; k,T&amp; ret) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 29</span>     <span style="color: #0000ff;">int</span> get_predecessor(<span style="color: #0000ff;">const</span> T&amp; k,T&amp; ret) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 30</span>     <span style="color: #0000ff;">int</span> insert_key(<span style="color: #0000ff;">const</span> T&amp;<span style="color: #000000;"> k);
+</span><span style="color: #008080;"> 31</span>     <span style="color: #0000ff;">int</span> delete_key(<span style="color: #0000ff;">const</span> T&amp;<span style="color: #000000;"> k);
+</span><span style="color: #008080;"> 32</span>     <span style="color: #0000ff;">void</span> inorder_tree_walk()<span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 33</span>     RedBlackTreeNode&lt;T&gt;* get_root() <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 34</span>     ~<span style="color: #000000;">RedBlackTree();
+</span><span style="color: #008080;"> 35</span> <span style="color: #0000ff;">private</span><span style="color: #000000;">:
+</span><span style="color: #008080;"> 36</span>     RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> root;
+</span><span style="color: #008080;"> 37</span>     <span style="color: #0000ff;">static</span>  RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">NIL;
+</span><span style="color: #008080;"> 38</span>     RedBlackTreeNode&lt;T&gt;* get_parent(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 39</span>     RedBlackTreeNode&lt;T&gt;* get_left(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 40</span>     RedBlackTreeNode&lt;T&gt;* get_right(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 41</span>     T get_key(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 42</span>     <span style="color: #0000ff;">int</span> get_color(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 43</span>     <span style="color: #0000ff;">void</span> set_color(RedBlackTreeNode&lt;T&gt;* pnode,<span style="color: #0000ff;">int</span><span style="color: #000000;"> color);
+</span><span style="color: #008080;"> 44</span>     <span style="color: #0000ff;">void</span> left_rotate(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode);
+</span><span style="color: #008080;"> 45</span>     <span style="color: #0000ff;">void</span> right_rotate(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode);
+</span><span style="color: #008080;"> 46</span>     <span style="color: #0000ff;">void</span> rb_insert_fixup(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode);
+</span><span style="color: #008080;"> 47</span>     <span style="color: #0000ff;">void</span> rb_delete_fixup(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode);
+</span><span style="color: #008080;"> 48</span>     RedBlackTreeNode&lt;T&gt;* get_maxmum(RedBlackTreeNode&lt;T&gt; *root) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 49</span>     RedBlackTreeNode&lt;T&gt;* get_minmum(RedBlackTreeNode&lt;T&gt; *root) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 50</span>     RedBlackTreeNode&lt;T&gt;* get_successor(RedBlackTreeNode&lt;T&gt; *pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 51</span>     RedBlackTreeNode&lt;T&gt;* get_predecessor(RedBlackTreeNode&lt;T&gt; *pnode) <span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 52</span>     RedBlackTreeNode&lt;T&gt;* search_tree_node(<span style="color: #0000ff;">const</span> T&amp; k)<span style="color: #0000ff;">const</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 53</span>     <span style="color: #0000ff;">void</span> make_empty(RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> root);
+</span><span style="color: #008080;"> 54</span> <span style="color: #000000;">};
+</span><span style="color: #008080;"> 55</span> 
+<span style="color: #008080;"> 56</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;"> 57</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;::NIL = <span style="color: #0000ff;">new</span> RedBlackTreeNode&lt;T&gt;<span style="color: #000000;">;
+</span><span style="color: #008080;"> 58</span> 
+<span style="color: #008080;"> 59</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;"> 60</span> RedBlackTree&lt;T&gt;<span style="color: #000000;">::RedBlackTree()
+</span><span style="color: #008080;"> 61</span> <span style="color: #000000;">{
+</span><span style="color: #008080;"> 62</span>     root =<span style="color: #000000;"> NULL;
+</span><span style="color: #008080;"> 63</span> <span style="color: #000000;">}
+</span><span style="color: #008080;"> 64</span> 
+<span style="color: #008080;"> 65</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;"> 66</span> <span style="color: #0000ff;">int</span> RedBlackTree&lt;T&gt;::search_element(<span style="color: #0000ff;">const</span> T&amp; k) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;"> 67</span> <span style="color: #000000;">{
+</span><span style="color: #008080;"> 68</span>     <span style="color: #0000ff;">return</span> (NIL !=<span style="color: #000000;"> search_tree_node(k));
+</span><span style="color: #008080;"> 69</span> <span style="color: #000000;">}
+</span><span style="color: #008080;"> 70</span> 
+<span style="color: #008080;"> 71</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;"> 72</span> <span style="color: #0000ff;">int</span> RedBlackTree&lt;T&gt;::get_minmum(T&amp; retmin)<span style="color: #0000ff;">const</span>
+<span style="color: #008080;"> 73</span> <span style="color: #000000;">{
+</span><span style="color: #008080;"> 74</span>     <span style="color: #0000ff;">if</span><span style="color: #000000;">(root)
+</span><span style="color: #008080;"> 75</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;"> 76</span>         retmin = get_minmum(root)-&gt;<span style="color: #000000;">key;
+</span><span style="color: #008080;"> 77</span>         <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 78</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;"> 79</span>     <span style="color: #0000ff;">return</span> -<span style="color: #800080;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 80</span> <span style="color: #000000;">}
+</span><span style="color: #008080;"> 81</span> 
+<span style="color: #008080;"> 82</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;"> 83</span> <span style="color: #0000ff;">int</span> RedBlackTree&lt;T&gt;::get_maxmum(T&amp; retmax)<span style="color: #0000ff;">const</span>
+<span style="color: #008080;"> 84</span> <span style="color: #000000;">{
+</span><span style="color: #008080;"> 85</span>     <span style="color: #0000ff;">if</span><span style="color: #000000;">(root)
+</span><span style="color: #008080;"> 86</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;"> 87</span>         retmax = get_maxmum(root)-&gt;<span style="color: #000000;">key;
+</span><span style="color: #008080;"> 88</span>         <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 89</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;"> 90</span>     <span style="color: #0000ff;">return</span> -<span style="color: #800080;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;"> 91</span> <span style="color: #000000;">}
+</span><span style="color: #008080;"> 92</span> 
+<span style="color: #008080;"> 93</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;"> 94</span> <span style="color: #0000ff;">int</span> RedBlackTree&lt;T&gt;::get_successor(<span style="color: #0000ff;">const</span> T&amp; k,T&amp; ret) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;"> 95</span> <span style="color: #000000;">{
+</span><span style="color: #008080;"> 96</span>     RedBlackTreeNode&lt;T&gt;* pnode =<span style="color: #000000;"> search_tree_node(k);
+</span><span style="color: #008080;"> 97</span> 
+<span style="color: #008080;"> 98</span>     <span style="color: #0000ff;">if</span>(pnode !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;"> 99</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">100</span>         pnode =<span style="color: #000000;"> get_successor(pnode);
+</span><span style="color: #008080;">101</span>         <span style="color: #0000ff;">if</span>(pnode !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">102</span> <span style="color: #000000;">        {
+</span><span style="color: #008080;">103</span>             ret = pnode-&gt;<span style="color: #000000;">key;
+</span><span style="color: #008080;">104</span>             <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;">105</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">106</span>         <span style="color: #0000ff;">return</span> -<span style="color: #800080;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;">107</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">108</span>     <span style="color: #0000ff;">return</span> -<span style="color: #800080;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;">109</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">110</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">111</span> <span style="color: #0000ff;">int</span> RedBlackTree&lt;T&gt;::get_predecessor(<span style="color: #0000ff;">const</span> T&amp; k,T&amp; ret) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">112</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">113</span>     RedBlackTreeNode&lt;T&gt;* pnode =<span style="color: #000000;"> search_tree_node(k);
+</span><span style="color: #008080;">114</span>     <span style="color: #0000ff;">if</span>(pnode !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">115</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">116</span>         pnode =<span style="color: #000000;"> get_predecessor(pnode);
+</span><span style="color: #008080;">117</span>         <span style="color: #0000ff;">if</span>(pnode !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">118</span> <span style="color: #000000;">        {
+</span><span style="color: #008080;">119</span>             ret = pnode-&gt;<span style="color: #000000;">key;
+</span><span style="color: #008080;">120</span>             <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;">121</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">122</span>         <span style="color: #0000ff;">return</span> -<span style="color: #800080;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;">123</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">124</span>     <span style="color: #0000ff;">return</span> -<span style="color: #800080;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;">125</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">126</span> 
+<span style="color: #008080;">127</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">128</span> <span style="color: #0000ff;">int</span> RedBlackTree&lt;T&gt;::insert_key(<span style="color: #0000ff;">const</span> T&amp;<span style="color: #000000;"> k)
+</span><span style="color: #008080;">129</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">130</span>     RedBlackTreeNode&lt;T&gt; *newnode = <span style="color: #0000ff;">new</span> RedBlackTreeNode&lt;T&gt;<span style="color: #000000;">;
+</span><span style="color: #008080;">131</span>     newnode-&gt;key =<span style="color: #000000;"> k;
+</span><span style="color: #008080;">132</span>     newnode-&gt;color =<span style="color: #000000;"> RED;
+</span><span style="color: #008080;">133</span>     newnode-&gt;left =<span style="color: #000000;"> NIL;
+</span><span style="color: #008080;">134</span>     newnode-&gt;right =<span style="color: #000000;"> NIL;
+</span><span style="color: #008080;">135</span>     newnode-&gt;parent =<span style="color: #000000;"> NIL;
+</span><span style="color: #008080;">136</span> 
+<span style="color: #008080;">137</span>     <span style="color: #0000ff;">if</span>(NULL ==<span style="color: #000000;"> root)
+</span><span style="color: #008080;">138</span>         root =<span style="color: #000000;"> newnode;
+</span><span style="color: #008080;">139</span>     <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">140</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">141</span>         RedBlackTreeNode&lt;T&gt;* pnode =<span style="color: #000000;"> root;
+</span><span style="color: #008080;">142</span>         RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> qnode;
+</span><span style="color: #008080;">143</span>         <span style="color: #0000ff;">while</span>(pnode !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">144</span> <span style="color: #000000;">        {
+</span><span style="color: #008080;">145</span>             qnode =<span style="color: #000000;"> pnode;
+</span><span style="color: #008080;">146</span>             <span style="color: #0000ff;">if</span>(pnode-&gt;key &gt; newnode-&gt;<span style="color: #000000;">key)
+</span><span style="color: #008080;">147</span>                 pnode = pnode-&gt;<span style="color: #000000;">left;
+</span><span style="color: #008080;">148</span>             <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">149</span>                 pnode = pnode-&gt;<span style="color: #000000;">right;
+</span><span style="color: #008080;">150</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">151</span>         newnode-&gt;parent =<span style="color: #000000;"> qnode;
+</span><span style="color: #008080;">152</span>         <span style="color: #0000ff;">if</span>(qnode-&gt;key &gt; newnode-&gt;<span style="color: #000000;">key)
+</span><span style="color: #008080;">153</span>             qnode-&gt;left =<span style="color: #000000;"> newnode;
+</span><span style="color: #008080;">154</span>         <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">155</span>             qnode-&gt;right =<span style="color: #000000;"> newnode;
+</span><span style="color: #008080;">156</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">157</span> <span style="color: #000000;">    rb_insert_fixup(newnode);
+</span><span style="color: #008080;">158</span>     <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;">159</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">160</span> 
+<span style="color: #008080;">161</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">162</span> <span style="color: #0000ff;">int</span> RedBlackTree&lt;T&gt;::delete_key(<span style="color: #0000ff;">const</span> T&amp;<span style="color: #000000;"> k)
+</span><span style="color: #008080;">163</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">164</span>     RedBlackTreeNode&lt;T&gt;* pnode =<span style="color: #000000;"> search_tree_node(k);
+</span><span style="color: #008080;">165</span>     <span style="color: #0000ff;">if</span>(NIL !=<span style="color: #000000;"> pnode)
+</span><span style="color: #008080;">166</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">167</span>         RedBlackTreeNode&lt;T&gt;* qnode,*<span style="color: #000000;">tnode;
+</span><span style="color: #008080;">168</span>         <span style="color: #0000ff;">if</span>(get_left(pnode) == NIL || get_right(pnode) ==<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">169</span>             qnode =<span style="color: #000000;"> pnode;
+</span><span style="color: #008080;">170</span>         <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">171</span>             qnode =<span style="color: #000000;"> get_successor(pnode);
+</span><span style="color: #008080;">172</span>         <span style="color: #0000ff;">if</span>(get_left(qnode) !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">173</span>             tnode =<span style="color: #000000;"> get_left(qnode);
+</span><span style="color: #008080;">174</span>         <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">175</span>             tnode =<span style="color: #000000;"> get_right(qnode);
+</span><span style="color: #008080;">176</span>         tnode-&gt;parent =<span style="color: #000000;"> get_parent(qnode);
+</span><span style="color: #008080;">177</span>         <span style="color: #0000ff;">if</span>(get_parent(qnode) ==<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">178</span>             root =<span style="color: #000000;"> tnode;
+</span><span style="color: #008080;">179</span>         <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(qnode ==<span style="color: #000000;"> get_left(get_parent(qnode)))
+</span><span style="color: #008080;">180</span>             qnode-&gt;parent-&gt;left =<span style="color: #000000;"> tnode;
+</span><span style="color: #008080;">181</span>         <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">182</span>             qnode-&gt;parent-&gt;right =<span style="color: #000000;"> tnode;
+</span><span style="color: #008080;">183</span>         <span style="color: #0000ff;">if</span>(qnode !=<span style="color: #000000;"> pnode)
+</span><span style="color: #008080;">184</span>              pnode-&gt;key =<span style="color: #000000;"> get_key(qnode);
+</span><span style="color: #008080;">185</span>         <span style="color: #0000ff;">if</span>(get_color(qnode) ==<span style="color: #000000;"> BLACK)
+</span><span style="color: #008080;">186</span> <span style="color: #000000;">            rb_delete_fixup(tnode);
+</span><span style="color: #008080;">187</span> <span style="color: #000000;">        delete qnode;
+</span><span style="color: #008080;">188</span>         <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;">189</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">190</span>     <span style="color: #0000ff;">return</span> -<span style="color: #800080;">1</span><span style="color: #000000;">;
+</span><span style="color: #008080;">191</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">192</span> 
+<span style="color: #008080;">193</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">194</span> RedBlackTree&lt;T&gt;::~<span style="color: #000000;">RedBlackTree()
+</span><span style="color: #008080;">195</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">196</span> <span style="color: #000000;">    make_empty(root);
+</span><span style="color: #008080;">197</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">198</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">199</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;:: get_root() <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">200</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">201</span>     <span style="color: #0000ff;">return</span><span style="color: #000000;"> root;
+</span><span style="color: #008080;">202</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">203</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">204</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;::get_parent(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">205</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">206</span>     <span style="color: #0000ff;">return</span> pnode-&gt;<span style="color: #000000;">parent;
+</span><span style="color: #008080;">207</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">208</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">209</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;::get_left(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">210</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">211</span>     <span style="color: #0000ff;">return</span> pnode-&gt;<span style="color: #000000;">left;
+</span><span style="color: #008080;">212</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">213</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">214</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;::get_right(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">215</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">216</span>     <span style="color: #0000ff;">return</span> pnode-&gt;<span style="color: #000000;">right;
+</span><span style="color: #008080;">217</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">218</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">219</span> T RedBlackTree&lt;T&gt;::get_key(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">220</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">221</span>     <span style="color: #0000ff;">return</span> pnode-&gt;<span style="color: #000000;">key;
+</span><span style="color: #008080;">222</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">223</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">224</span> <span style="color: #0000ff;">int</span> RedBlackTree&lt;T&gt;::get_color(RedBlackTreeNode&lt;T&gt;* pnode) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">225</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">226</span>     <span style="color: #0000ff;">return</span> pnode-&gt;<span style="color: #000000;">color;
+</span><span style="color: #008080;">227</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">228</span> 
+<span style="color: #008080;">229</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">230</span> <span style="color: #0000ff;">void</span> RedBlackTree&lt;T&gt;::set_color(RedBlackTreeNode&lt;T&gt;* pnode,<span style="color: #0000ff;">int</span><span style="color: #000000;"> color)
+</span><span style="color: #008080;">231</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">232</span>     pnode-&gt;color =<span style="color: #000000;"> color;
+</span><span style="color: #008080;">233</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">234</span> 
+<span style="color: #008080;">235</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">236</span> <span style="color: #0000ff;">void</span> RedBlackTree&lt;T&gt;::left_rotate(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode)
+</span><span style="color: #008080;">237</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">238</span>     RedBlackTreeNode&lt;T&gt;* rightnode = pnode-&gt;<span style="color: #000000;">right;
+</span><span style="color: #008080;">239</span>     pnode-&gt;right = rightnode-&gt;<span style="color: #000000;">left;
+</span><span style="color: #008080;">240</span>     <span style="color: #0000ff;">if</span>(rightnode-&gt;left !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">241</span>         rightnode-&gt;left-&gt;parent =<span style="color: #000000;"> pnode;
+</span><span style="color: #008080;">242</span>     rightnode-&gt;parent = pnode-&gt;<span style="color: #000000;">parent;
+</span><span style="color: #008080;">243</span>     <span style="color: #0000ff;">if</span>(pnode-&gt;parent ==<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">244</span>         root =<span style="color: #000000;"> rightnode;
+</span><span style="color: #008080;">245</span>     <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(pnode == pnode-&gt;parent-&gt;<span style="color: #000000;">left)
+</span><span style="color: #008080;">246</span>         pnode-&gt;parent-&gt;left =<span style="color: #000000;"> rightnode;
+</span><span style="color: #008080;">247</span>     <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">248</span>         pnode-&gt;parent-&gt;right =<span style="color: #000000;"> rightnode;
+</span><span style="color: #008080;">249</span>     rightnode-&gt;left =<span style="color: #000000;"> pnode;
+</span><span style="color: #008080;">250</span>     pnode-&gt;parent =<span style="color: #000000;"> rightnode;
+</span><span style="color: #008080;">251</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">252</span> 
+<span style="color: #008080;">253</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">254</span> <span style="color: #0000ff;">void</span> RedBlackTree&lt;T&gt;::right_rotate(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode)
+</span><span style="color: #008080;">255</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">256</span>     RedBlackTreeNode&lt;T&gt;* leftnode = pnode-&gt;<span style="color: #000000;">left;
+</span><span style="color: #008080;">257</span>     pnode-&gt;left = leftnode-&gt;<span style="color: #000000;">right;
+</span><span style="color: #008080;">258</span>     <span style="color: #0000ff;">if</span>(leftnode-&gt;right !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">259</span>         leftnode-&gt;right-&gt;parent =<span style="color: #000000;"> pnode;
+</span><span style="color: #008080;">260</span>     leftnode-&gt;parent = pnode-&gt;<span style="color: #000000;">parent;
+</span><span style="color: #008080;">261</span>     <span style="color: #0000ff;">if</span>(pnode-&gt;parent ==<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">262</span>         root =<span style="color: #000000;"> leftnode;
+</span><span style="color: #008080;">263</span>     <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(pnode == pnode-&gt;parent-&gt;<span style="color: #000000;">left)
+</span><span style="color: #008080;">264</span>         pnode-&gt;parent-&gt;left =<span style="color: #000000;"> leftnode;
+</span><span style="color: #008080;">265</span>     <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">266</span>         pnode-&gt;parent-&gt;right =<span style="color: #000000;"> leftnode;
+</span><span style="color: #008080;">267</span>     leftnode-&gt;right =<span style="color: #000000;"> pnode;
+</span><span style="color: #008080;">268</span>     pnode-&gt;parent =<span style="color: #000000;"> leftnode;
+</span><span style="color: #008080;">269</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">270</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">271</span> <span style="color: #0000ff;">void</span> RedBlackTree&lt;T&gt;::rb_insert_fixup(RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;">pnode)
+</span><span style="color: #008080;">272</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">273</span>     RedBlackTreeNode&lt;T&gt; *qnode,*<span style="color: #000000;">tnode;
+</span><span style="color: #008080;">274</span>     <span style="color: #008000;">//</span><span style="color: #008000;">当pnode的父节点为红色时，破坏性质4</span>
+<span style="color: #008080;">275</span>     <span style="color: #0000ff;">while</span>(get_color(get_parent(pnode))==<span style="color: #000000;"> RED)
+</span><span style="color: #008080;">276</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">277</span>         qnode = get_parent(get_parent(pnode));<span style="color: #008000;">//</span><span style="color: #008000;">祖父结点</span>
+<span style="color: #008080;">278</span>         <span style="color: #0000ff;">if</span>(get_parent(pnode) ==<span style="color: #000000;"> get_left(qnode))
+</span><span style="color: #008080;">279</span> <span style="color: #000000;">        {
+</span><span style="color: #008080;">280</span>             tnode = get_right(qnode);<span style="color: #008000;">//</span><span style="color: #008000;">pnode的叔叔结点</span>
+<span style="color: #008080;">281</span>             <span style="color: #0000ff;">if</span>(get_color(tnode) == RED) <span style="color: #008000;">//</span><span style="color: #008000;">case1 叔叔结点为红色</span>
+<span style="color: #008080;">282</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">283</span> <span style="color: #000000;">                set_color(get_parent(pnode),BLACK);
+</span><span style="color: #008080;">284</span> <span style="color: #000000;">                set_color(tnode,BLACK);
+</span><span style="color: #008080;">285</span> <span style="color: #000000;">                set_color(qnode,RED);
+</span><span style="color: #008080;">286</span>                 pnode =<span style="color: #000000;"> qnode;
+</span><span style="color: #008080;">287</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">288</span>             <span style="color: #0000ff;">else</span>  <span style="color: #008000;">//</span><span style="color: #008000;">case 2 or case 3</span>
+<span style="color: #008080;">289</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">290</span>                 <span style="color: #0000ff;">if</span>(pnode == get_right(get_parent(pnode)))  <span style="color: #008000;">//</span><span style="color: #008000;">case2 pnode为右孩子</span>
+<span style="color: #008080;">291</span> <span style="color: #000000;">                {
+</span><span style="color: #008080;">292</span>                     pnode =<span style="color: #000000;"> get_parent(pnode);
+</span><span style="color: #008080;">293</span> <span style="color: #000000;">                    left_rotate(pnode);
+</span><span style="color: #008080;">294</span> <span style="color: #000000;">                }
+</span><span style="color: #008080;">295</span>                 <span style="color: #008000;">//</span><span style="color: #008000;">case3 pnode为左孩子</span>
+<span style="color: #008080;">296</span> <span style="color: #000000;">                set_color(get_parent(pnode),BLACK);
+</span><span style="color: #008080;">297</span>                 qnode =<span style="color: #000000;"> get_parent(get_parent(pnode));
+</span><span style="color: #008080;">298</span> <span style="color: #000000;">                set_color(qnode,RED);
+</span><span style="color: #008080;">299</span> <span style="color: #000000;">                right_rotate(qnode);
+</span><span style="color: #008080;">300</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">301</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">302</span>         <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">303</span> <span style="color: #000000;">        {
+</span><span style="color: #008080;">304</span>             tnode =<span style="color: #000000;"> get_left(qnode);
+</span><span style="color: #008080;">305</span>             <span style="color: #0000ff;">if</span>(get_color(tnode) ==<span style="color: #000000;"> RED)
+</span><span style="color: #008080;">306</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">307</span> <span style="color: #000000;">                set_color(get_parent(pnode),BLACK);
+</span><span style="color: #008080;">308</span> <span style="color: #000000;">                set_color(tnode,BLACK);
+</span><span style="color: #008080;">309</span> <span style="color: #000000;">                set_color(qnode,RED);
+</span><span style="color: #008080;">310</span>                 pnode =<span style="color: #000000;"> qnode;
+</span><span style="color: #008080;">311</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">312</span>             <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">313</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">314</span>                 <span style="color: #0000ff;">if</span>(pnode ==<span style="color: #000000;"> get_left(get_parent(pnode)))
+</span><span style="color: #008080;">315</span> <span style="color: #000000;">                {
+</span><span style="color: #008080;">316</span>                     pnode =<span style="color: #000000;"> get_parent(pnode);
+</span><span style="color: #008080;">317</span> <span style="color: #000000;">                    right_rotate(pnode);
+</span><span style="color: #008080;">318</span> <span style="color: #000000;">                }
+</span><span style="color: #008080;">319</span> <span style="color: #000000;">                set_color(get_parent(pnode),BLACK);
+</span><span style="color: #008080;">320</span>                 qnode =<span style="color: #000000;"> get_parent(get_parent(pnode));
+</span><span style="color: #008080;">321</span> <span style="color: #000000;">                set_color(qnode,RED);
+</span><span style="color: #008080;">322</span> <span style="color: #000000;">                left_rotate(qnode);
+</span><span style="color: #008080;">323</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">324</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">325</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">326</span> <span style="color: #000000;">    set_color(root,BLACK);
+</span><span style="color: #008080;">327</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">328</span> 
+<span style="color: #008080;">329</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">330</span> <span style="color: #0000ff;">void</span> RedBlackTree&lt;T&gt;::rb_delete_fixup(RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">pnode)
+</span><span style="color: #008080;">331</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">332</span>     <span style="color: #0000ff;">while</span>(pnode != root &amp;&amp; get_color(pnode) ==<span style="color: #000000;"> BLACK)
+</span><span style="color: #008080;">333</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">334</span>         RedBlackTreeNode&lt;T&gt; *qnode,*<span style="color: #000000;">tnode;
+</span><span style="color: #008080;">335</span>         <span style="color: #0000ff;">if</span>(pnode ==<span style="color: #000000;"> get_left(get_parent(pnode)))
+</span><span style="color: #008080;">336</span> <span style="color: #000000;">        {
+</span><span style="color: #008080;">337</span>             qnode =<span style="color: #000000;"> get_right(get_parent(pnode));
+</span><span style="color: #008080;">338</span>             <span style="color: #0000ff;">if</span>(get_color(qnode) ==<span style="color: #000000;"> RED)
+</span><span style="color: #008080;">339</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">340</span> <span style="color: #000000;">                set_color(qnode,BLACK);
+</span><span style="color: #008080;">341</span> <span style="color: #000000;">                set_color(get_parent(pnode),RED);
+</span><span style="color: #008080;">342</span> <span style="color: #000000;">                left_rotate(get_parent(pnode));
+</span><span style="color: #008080;">343</span>                 qnode =<span style="color: #000000;"> get_right(get_parent(pnode));
+</span><span style="color: #008080;">344</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">345</span>             <span style="color: #0000ff;">if</span>(get_color(get_left(qnode)) == BLACK &amp;&amp; get_color(get_right(qnode)) ==<span style="color: #000000;"> BLACK)
+</span><span style="color: #008080;">346</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">347</span> <span style="color: #000000;">                set_color(qnode,RED);
+</span><span style="color: #008080;">348</span>                 pnode =<span style="color: #000000;"> get_parent(pnode);
+</span><span style="color: #008080;">349</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">350</span>             <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">351</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">352</span>                 <span style="color: #0000ff;">if</span>(get_color(get_right(qnode)) ==<span style="color: #000000;"> BLACK)
+</span><span style="color: #008080;">353</span> <span style="color: #000000;">                {
+</span><span style="color: #008080;">354</span> <span style="color: #000000;">                    set_color(get_left(qnode),BLACK);
+</span><span style="color: #008080;">355</span> <span style="color: #000000;">                    set_color(qnode,RED);
+</span><span style="color: #008080;">356</span> <span style="color: #000000;">                    right_rotate(qnode);
+</span><span style="color: #008080;">357</span>                     qnode =<span style="color: #000000;"> get_right(get_parent(pnode));
+</span><span style="color: #008080;">358</span> <span style="color: #000000;">                }
+</span><span style="color: #008080;">359</span> <span style="color: #000000;">                set_color(qnode,get_color(get_parent(pnode)));
+</span><span style="color: #008080;">360</span> <span style="color: #000000;">                set_color(get_parent(pnode),BLACK);
+</span><span style="color: #008080;">361</span> <span style="color: #000000;">                set_color(get_right(qnode),BLACK);
+</span><span style="color: #008080;">362</span> <span style="color: #000000;">                left_rotate(get_parent(pnode));
+</span><span style="color: #008080;">363</span>                 pnode =<span style="color: #000000;"> root;
+</span><span style="color: #008080;">364</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">365</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">366</span>         <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">367</span> <span style="color: #000000;">        {
+</span><span style="color: #008080;">368</span>             qnode =<span style="color: #000000;"> get_left(get_parent(pnode));
+</span><span style="color: #008080;">369</span>             <span style="color: #0000ff;">if</span>(get_color(qnode) ==<span style="color: #000000;"> RED)
+</span><span style="color: #008080;">370</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">371</span> <span style="color: #000000;">                set_color(qnode,BLACK);
+</span><span style="color: #008080;">372</span> <span style="color: #000000;">                set_color(get_parent(pnode),RED);
+</span><span style="color: #008080;">373</span> <span style="color: #000000;">                right_rotate(get_parent(pnode));
+</span><span style="color: #008080;">374</span>                 qnode =<span style="color: #000000;"> get_left(get_parent(pnode));
+</span><span style="color: #008080;">375</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">376</span>             <span style="color: #0000ff;">if</span>(get_color(get_right(qnode)) == BLACK &amp;&amp; get_color(get_left(qnode)) ==<span style="color: #000000;"> BLACK)
+</span><span style="color: #008080;">377</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">378</span> <span style="color: #000000;">                set_color(qnode,RED);
+</span><span style="color: #008080;">379</span>                 pnode =<span style="color: #000000;"> get_parent(pnode);
+</span><span style="color: #008080;">380</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">381</span>             <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">382</span> <span style="color: #000000;">            {
+</span><span style="color: #008080;">383</span>                 <span style="color: #0000ff;">if</span>(get_color(get_left(qnode)) ==<span style="color: #000000;"> BLACK)
+</span><span style="color: #008080;">384</span> <span style="color: #000000;">                {
+</span><span style="color: #008080;">385</span> <span style="color: #000000;">                    set_color(get_right(qnode),BLACK);
+</span><span style="color: #008080;">386</span> <span style="color: #000000;">                    set_color(qnode,RED);
+</span><span style="color: #008080;">387</span> <span style="color: #000000;">                    left_rotate(qnode);
+</span><span style="color: #008080;">388</span>                     qnode =<span style="color: #000000;"> get_left(get_parent(pnode));
+</span><span style="color: #008080;">389</span> <span style="color: #000000;">                }
+</span><span style="color: #008080;">390</span> <span style="color: #000000;">                set_color(qnode,get_color(get_parent(pnode)));
+</span><span style="color: #008080;">391</span> <span style="color: #000000;">                set_color(get_parent(pnode),BLACK);
+</span><span style="color: #008080;">392</span> <span style="color: #000000;">                set_color(get_left(qnode),BLACK);
+</span><span style="color: #008080;">393</span> <span style="color: #000000;">                right_rotate(get_parent(pnode));
+</span><span style="color: #008080;">394</span>                 pnode =<span style="color: #000000;"> root;
+</span><span style="color: #008080;">395</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">396</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">397</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">398</span> <span style="color: #000000;">    set_color(pnode,BLACK);
+</span><span style="color: #008080;">399</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">400</span> 
+<span style="color: #008080;">401</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">402</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;::get_maxmum(RedBlackTreeNode&lt;T&gt; *root) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">403</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">404</span>     RedBlackTreeNode&lt;T&gt; *pnode =<span style="color: #000000;"> root;
+</span><span style="color: #008080;">405</span>     <span style="color: #0000ff;">while</span>(pnode-&gt;right !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">406</span>         pnode = pnode-&gt;<span style="color: #000000;">right;
+</span><span style="color: #008080;">407</span>     <span style="color: #0000ff;">return</span><span style="color: #000000;"> pnode;
+</span><span style="color: #008080;">408</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">409</span> 
+<span style="color: #008080;">410</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">411</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;::get_minmum(RedBlackTreeNode&lt;T&gt; *root) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">412</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">413</span>     RedBlackTreeNode&lt;T&gt; *pnode =<span style="color: #000000;"> root;
+</span><span style="color: #008080;">414</span>     <span style="color: #0000ff;">while</span>(pnode-&gt;left !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">415</span>         pnode = pnode-&gt;<span style="color: #000000;">left;
+</span><span style="color: #008080;">416</span>     <span style="color: #0000ff;">return</span><span style="color: #000000;"> pnode;
+</span><span style="color: #008080;">417</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">418</span> 
+<span style="color: #008080;">419</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">420</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;:: get_successor(RedBlackTreeNode&lt;T&gt; *pnode) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">421</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">422</span>     <span style="color: #0000ff;">if</span>(pnode-&gt;right !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">423</span>         <span style="color: #0000ff;">return</span> get_minmum(pnode-&gt;<span style="color: #000000;">right);
+</span><span style="color: #008080;">424</span>     RedBlackTreeNode&lt;T&gt;* parentnode =<span style="color: #000000;"> get_parent(pnode);
+</span><span style="color: #008080;">425</span>     <span style="color: #0000ff;">while</span>(parentnode != NIL &amp;&amp; get_right(parentnode) ==<span style="color: #000000;"> pnode)
+</span><span style="color: #008080;">426</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">427</span>             pnode =<span style="color: #000000;"> parentnode;
+</span><span style="color: #008080;">428</span>             parentnode =<span style="color: #000000;"> get_parent(pnode);
+</span><span style="color: #008080;">429</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">430</span>     <span style="color: #0000ff;">return</span><span style="color: #000000;"> parentnode;
+</span><span style="color: #008080;">431</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">432</span> 
+<span style="color: #008080;">433</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">434</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;::get_predecessor(RedBlackTreeNode&lt;T&gt; *pnode) <span style="color: #0000ff;">const</span>
+<span style="color: #008080;">435</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">436</span>     <span style="color: #0000ff;">if</span>(pnode-&gt;left !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">437</span>         <span style="color: #0000ff;">return</span> get_maxmum(pnode-&gt;<span style="color: #000000;">left);
+</span><span style="color: #008080;">438</span>     RedBlackTreeNode&lt;T&gt;* parentnode =<span style="color: #000000;"> get_parent(pnode);
+</span><span style="color: #008080;">439</span>     <span style="color: #0000ff;">while</span>(parentnode != NIL &amp;&amp; get_left(parentnode) ==<span style="color: #000000;"> pnode)
+</span><span style="color: #008080;">440</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">441</span>         pnode =<span style="color: #000000;"> parentnode;
+</span><span style="color: #008080;">442</span>         parentnode =<span style="color: #000000;"> get_parent(pnode);
+</span><span style="color: #008080;">443</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">444</span>     <span style="color: #0000ff;">return</span><span style="color: #000000;"> parentnode;
+</span><span style="color: #008080;">445</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">446</span> 
+<span style="color: #008080;">447</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">448</span> RedBlackTreeNode&lt;T&gt;* RedBlackTree&lt;T&gt;:: search_tree_node(<span style="color: #0000ff;">const</span> T&amp; k)<span style="color: #0000ff;">const</span>
+<span style="color: #008080;">449</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">450</span>     RedBlackTreeNode&lt;T&gt;* pnode =<span style="color: #000000;"> root;
+</span><span style="color: #008080;">451</span>     <span style="color: #0000ff;">while</span>(pnode !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">452</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">453</span>         <span style="color: #0000ff;">if</span>(pnode-&gt;key ==<span style="color: #000000;"> k)
+</span><span style="color: #008080;">454</span>             <span style="color: #0000ff;">break</span><span style="color: #000000;">;
+</span><span style="color: #008080;">455</span>         <span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span>(pnode-&gt;key &gt;<span style="color: #000000;"> k)
+</span><span style="color: #008080;">456</span>             pnode = pnode-&gt;<span style="color: #000000;">left;
+</span><span style="color: #008080;">457</span>         <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">458</span>             pnode = pnode-&gt;<span style="color: #000000;">right;
+</span><span style="color: #008080;">459</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">460</span>     <span style="color: #0000ff;">return</span><span style="color: #000000;"> pnode;
+</span><span style="color: #008080;">461</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">462</span> 
+<span style="color: #008080;">463</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">464</span> <span style="color: #0000ff;">void</span> RedBlackTree&lt;T&gt;::make_empty(RedBlackTreeNode&lt;T&gt;*<span style="color: #000000;"> root)
+</span><span style="color: #008080;">465</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">466</span>     <span style="color: #0000ff;">if</span><span style="color: #000000;">(root)
+</span><span style="color: #008080;">467</span> <span style="color: #000000;">    {
+</span><span style="color: #008080;">468</span>         RedBlackTreeNode&lt;T&gt; *pleft = root-&gt;<span style="color: #000000;">left;
+</span><span style="color: #008080;">469</span>         RedBlackTreeNode&lt;T&gt;* pright = root-&gt;<span style="color: #000000;">right;
+</span><span style="color: #008080;">470</span> <span style="color: #000000;">        delete root;
+</span><span style="color: #008080;">471</span>         <span style="color: #0000ff;">if</span>(pleft !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">472</span> <span style="color: #000000;">            make_empty(pleft);
+</span><span style="color: #008080;">473</span>         <span style="color: #0000ff;">if</span>(pright !=<span style="color: #000000;"> NIL)
+</span><span style="color: #008080;">474</span> <span style="color: #000000;">            make_empty(pright);
+</span><span style="color: #008080;">475</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">476</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">477</span> template &lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #008080;">478</span> <span style="color: #0000ff;">void</span> RedBlackTree&lt;T&gt;::inorder_tree_walk()<span style="color: #0000ff;">const</span>
+<span style="color: #008080;">479</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">480</span>     <span style="color: #0000ff;">if</span>(NULL !=<span style="color: #000000;"> root)
+</span><span style="color: #008080;">481</span> <span style="color: #000000;">     {
+</span><span style="color: #008080;">482</span>          stack&lt;RedBlackTreeNode&lt;T&gt;* &gt;<span style="color: #000000;"> s;
+</span><span style="color: #008080;">483</span>          RedBlackTreeNode&lt;T&gt; *<span style="color: #000000;">ptmpnode;
+</span><span style="color: #008080;">484</span>          ptmpnode =<span style="color: #000000;"> root;
+</span><span style="color: #008080;">485</span>          <span style="color: #0000ff;">while</span>(NIL != ptmpnode || !<span style="color: #000000;">s.empty())
+</span><span style="color: #008080;">486</span> <span style="color: #000000;">         {
+</span><span style="color: #008080;">487</span>              <span style="color: #0000ff;">if</span>(NIL !=<span style="color: #000000;"> ptmpnode)
+</span><span style="color: #008080;">488</span> <span style="color: #000000;">             {
+</span><span style="color: #008080;">489</span> <span style="color: #000000;">                 s.push(ptmpnode);
+</span><span style="color: #008080;">490</span>                  ptmpnode = ptmpnode-&gt;<span style="color: #000000;">left;
+</span><span style="color: #008080;">491</span> <span style="color: #000000;">             }
+</span><span style="color: #008080;">492</span>              <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">493</span> <span style="color: #000000;">             {
+</span><span style="color: #008080;">494</span>                  ptmpnode =<span style="color: #000000;"> s.top();
+</span><span style="color: #008080;">495</span> <span style="color: #000000;">                 s.pop();
+</span><span style="color: #008080;">496</span>                  cout&lt;&lt;ptmpnode-&gt;key&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">:</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+</span><span style="color: #008080;">497</span>                  <span style="color: #0000ff;">if</span>(ptmpnode-&gt;color ==<span style="color: #000000;"> BLACK)
+</span><span style="color: #008080;">498</span>                     cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Black</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">499</span>                  <span style="color: #0000ff;">else</span>
+<span style="color: #008080;">500</span>                     cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Red</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">501</span>                  ptmpnode = ptmpnode-&gt;<span style="color: #000000;">right;
+</span><span style="color: #008080;">502</span> <span style="color: #000000;">             }
+</span><span style="color: #008080;">503</span> <span style="color: #000000;">         }
+</span><span style="color: #008080;">504</span> <span style="color: #000000;">     }
+</span><span style="color: #008080;">505</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">506</span> <span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+</span><span style="color: #008080;">507</span> <span style="color: #000000;">{
+</span><span style="color: #008080;">508</span>     RedBlackTree&lt;<span style="color: #0000ff;">int</span>&gt;<span style="color: #000000;"> rbtree;
+</span><span style="color: #008080;">509</span>     <span style="color: #0000ff;">int</span><span style="color: #000000;"> value;
+</span><span style="color: #008080;">510</span>     rbtree.insert_key(<span style="color: #800080;">41</span><span style="color: #000000;">);
+</span><span style="color: #008080;">511</span>     rbtree.insert_key(<span style="color: #800080;">38</span><span style="color: #000000;">);
+</span><span style="color: #008080;">512</span>     rbtree.insert_key(<span style="color: #800080;">31</span><span style="color: #000000;">);
+</span><span style="color: #008080;">513</span>     rbtree.insert_key(<span style="color: #800080;">12</span><span style="color: #000000;">);
+</span><span style="color: #008080;">514</span>     rbtree.insert_key(<span style="color: #800080;">19</span><span style="color: #000000;">);
+</span><span style="color: #008080;">515</span>     rbtree.insert_key(<span style="color: #800080;">8</span><span style="color: #000000;">);
+</span><span style="color: #008080;">516</span>     cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">root is: </span><span style="color: #800000;">"</span>&lt;&lt;rbtree.get_root()-&gt;key&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">517</span>     cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Inorder walk red black tree:</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">518</span> <span style="color: #000000;">    rbtree.inorder_tree_walk();
+</span><span style="color: #008080;">519</span>     <span style="color: #0000ff;">if</span>(rbtree.get_minmum(value) == <span style="color: #800080;">0</span><span style="color: #000000;">)
+</span><span style="color: #008080;">520</span>         cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">minmum is: </span><span style="color: #800000;">"</span>&lt;&lt;value&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">521</span>     <span style="color: #0000ff;">if</span>(rbtree.get_maxmum(value) == <span style="color: #800080;">0</span><span style="color: #000000;">)
+</span><span style="color: #008080;">522</span>         cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">maxmum is: </span><span style="color: #800000;">"</span>&lt;&lt;value&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">523</span>     <span style="color: #0000ff;">if</span>(rbtree.get_successor(<span style="color: #800080;">19</span>,value) == <span style="color: #800080;">0</span><span style="color: #000000;">)
+</span><span style="color: #008080;">524</span>         cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">19 successor is: </span><span style="color: #800000;">"</span>&lt;&lt;value&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">525</span>     <span style="color: #0000ff;">if</span>(rbtree.get_predecessor(<span style="color: #800080;">19</span>,value) == <span style="color: #800080;">0</span><span style="color: #000000;">)
+</span><span style="color: #008080;">526</span>         cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">19 predecessor is: </span><span style="color: #800000;">"</span>&lt;&lt;value&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">527</span>     <span style="color: #0000ff;">if</span>(rbtree.delete_key(<span style="color: #800080;">38</span>)==<span style="color: #800080;">0</span><span style="color: #000000;">)
+</span><span style="color: #008080;">528</span>         cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">delete 38 successfully</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">529</span>      cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">root is: </span><span style="color: #800000;">"</span>&lt;&lt;rbtree.get_root()-&gt;key&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">530</span>     cout&lt;&lt;<span style="color: #800000;">"</span><span style="color: #800000;">Inorder walk red black tree:</span><span style="color: #800000;">"</span>&lt;&lt;<span style="color: #000000;">endl;
+</span><span style="color: #008080;">531</span> <span style="color: #000000;">    rbtree.inorder_tree_walk();
+</span><span style="color: #008080;">532</span>     <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+</span><span style="color: #008080;">533</span> }</pre>
+</div>
+</div>
+<p>程序测试结果如下所示：</p>
+<p><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/30183653-99f51aacdb104494a88dfb63c9d274d0.png" alt=""><br>　　实现过程中感触非常多，需要很大的耐心去调试程序，关键的是insert和delete操作。</p></div><div id="MySignature" style="display: block;">冷静思考，勇敢面对，把握未来！</div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/Anker/category/436374.html">数据结构与算法</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(2882773,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://msg.cnblogs.com/send/Anker%26%2339%3Bs%20Blog" target="_blank">联系我</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/icon_weibo_24.png" alt=""></a>
+<a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/Anker/" target="_blank"><img src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/u305504.png" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/Anker/">Anker's Blog</a><br>
+<a href="http://home.cnblogs.com/u/Anker/followees">关注 - 13</a><br>
+<a href="http://home.cnblogs.com/u/Anker/followers">粉丝 - 570</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(2882773,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">10</span>
+    </div>
+	<div class="buryit" onclick="votePost(2882773,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/Anker/archive/2013/01/28/2880581.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/Anker/archive/2013/01/28/2880581.html" title="发布于2013-01-28 21:49">《算法导论》读书笔记之第12章 二叉查找树</a><br><a href="http://www.cnblogs.com/Anker/archive/2013/01/31/2888111.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/Anker/archive/2013/01/31/2888111.html" title="发布于2013-01-31 19:37">明天回家了</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2013-01-30 12:25</span> <a href="http://www.cnblogs.com/Anker/">Anker's Blog</a> 阅读(<span id="post_view_count">6693</span>) 评论(<span id="post_comment_count">7</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=2882773" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#" onclick="AddToWz(2882773);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=90566,cb_entryId=2882773,cb_blogApp=currentBlogApp,cb_blogUserGuid='91cfcfb7-5c8c-e011-a53f-842b2b196315',cb_entryCreatedDate='2013/1/30 12:25:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#2610714" class="layer">#1楼</a><a name="2610714" id="comment_anchor_2610714"></a>  <span class="comment_date">2013-01-30 12:32</span> <a id="a_comment_author_2610714" href="http://www.cnblogs.com/anduinlothar/" target="_blank">安度</a> <a href="http://msg.cnblogs.com/send/%E5%AE%89%E5%BA%A6" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2610714" class="blog_comment_body">虽然我没弄懂红黑树，但我总感觉你的第一张图画的不对</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2610714,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2610714,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2610714_avatar" style="display:none;">http://pic.cnblogs.com/face/u122671.jpg?id=01173135</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#2610995" class="layer">#2楼</a><a name="2610995" id="comment_anchor_2610995"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2013-01-30 17:41</span> <a id="a_comment_author_2610995" href="http://www.cnblogs.com/Anker/" target="_blank">Anker's Blog</a> <a href="http://msg.cnblogs.com/send/Anker%26%2339%3Bs%20Blog" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2610995" class="blog_comment_body"><a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#2610714" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2610714);">@</a>安度<br>请你指出哪个地方不对呢？你可能觉得怎会有NIL的吧，NIL在红黑树中不是空指针的，代表的是叶子（黑色标记）的，外部结点。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2610995,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2610995,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2610995_avatar" style="display:none;">http://pic.cnblogs.com/face/u305504.png?id=08095526</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#2611071" class="layer">#3楼</a><a name="2611071" id="comment_anchor_2611071"></a>  <span class="comment_date">2013-01-30 20:49</span> <a id="a_comment_author_2611071" href="http://www.cnblogs.com/menlsh/" target="_blank">依旧淡然</a> <a href="http://msg.cnblogs.com/send/%E4%BE%9D%E6%97%A7%E6%B7%A1%E7%84%B6" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2611071" class="blog_comment_body">楼主的图画的真漂亮哈！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2611071,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2611071,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2611071_avatar" style="display:none;">http://pic.cnblogs.com/face/u430074.jpg?id=09153129</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#2748531" class="layer">#4楼</a><a name="2748531" id="comment_anchor_2748531"></a>  <span class="comment_date">2013-08-11 20:27</span> <a id="a_comment_author_2748531" href="http://www.cnblogs.com/snipes/" target="_blank">Wesley Snipes</a> <a href="http://msg.cnblogs.com/send/Wesley%20Snipes" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2748531" class="blog_comment_body">这是用什么软件画的图，挺好看的。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2748531,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2748531,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#2749437" class="layer">#5楼</a><a name="2749437" id="comment_anchor_2749437"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2013-08-12 22:08</span> <a id="a_comment_author_2749437" href="http://www.cnblogs.com/Anker/" target="_blank">Anker's Blog</a> <a href="http://msg.cnblogs.com/send/Anker%26%2339%3Bs%20Blog" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2749437" class="blog_comment_body"><a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#2748531" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,2748531);">@</a>Wesley Snipes<br>用viso画的哈</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2749437,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2749437,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2749437_avatar" style="display:none;">http://pic.cnblogs.com/face/u305504.png?id=08095526</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#2942068" class="layer">#6楼</a><a name="2942068" id="comment_anchor_2942068"></a>  <span class="comment_date">2014-05-19 19:53</span> <a id="a_comment_author_2942068" href="http://www.cnblogs.com/huoyj/" target="_blank">huoyj</a> <a href="http://msg.cnblogs.com/send/huoyj" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2942068" class="blog_comment_body">楼主好强大啊，这块我看的迷迷糊糊的。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2942068,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2942068,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_2942068_avatar" style="display:none;">http://pic.cnblogs.com/face/u143223.jpg</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#2969176" class="layer">#7楼</a><a name="2969176" id="comment_anchor_2969176"></a><span id="comment-maxId" style="display:none;">2969176</span><span id="comment-maxDate" style="display:none;">2014/6/21 19:57:21</span>  <span class="comment_date">2014-06-21 19:57</span> <a id="a_comment_author_2969176" href="http://home.cnblogs.com/u/628144/" target="_blank">乌班图</a> <a href="http://msg.cnblogs.com/send/%E4%B9%8C%E7%8F%AD%E5%9B%BE" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_2969176" class="blog_comment_body">楼主 我想问下<br>你的NIL是一个static变量，那么当你删除一个节点的时候，有可能就更改了NIL的parent。会对所有NIL节点都造成影响的。。。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(2969176,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(2969176,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="http://www.rongcloud.cn/" target="_blank">【推荐】融云即时通讯云－专注为 App 开发者提供IM云服务</a><br><a href="https://www.jpush.cn/" target="_blank">【推荐】极光推送30多万开发者的选择，SDK接入量超过30亿了，你还没注册？</a><br><a href="http://click.aliyun.com/m/994/" target="_blank">【免费测】根据网站PV推荐完整架构方案</a><br></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    fixPostBodyFormat();
+</script>
+<div id="google_ad_c1" class="c_ad_block"><a href="http://www.gcpowertools.com.cn/products/componentone.htm?utm_source=cnblogs&utm_medium=blogpage&utm_term=bottom&utm_content=C1&utm_campaign=community" target="_blank"><img width="300" height="250" src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/24442-20151030141701419-628671799.gif" alt="" title=""></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/534394/" target="_blank">你现在还在打开微信公众号吗？</a><br> ·  <a href="http://news.cnblogs.com/n/534393/" target="_blank">德国汽车商计划将汽车实时数据传至HERE地图</a><br> ·  <a href="http://news.cnblogs.com/n/534392/" target="_blank">苹果自诩重要开源计算机公司 遭开发者怒批</a><br> ·  <a href="http://news.cnblogs.com/n/534391/" target="_blank">改变你的状态</a><br> ·  <a href="http://news.cnblogs.com/n/534390/" target="_blank">腾讯离职创业4年 我的失败、迷茫与重生</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="google_ad_c2" class="c_ad_block"><a href="http://e.jikexueyuan.com/android.html?hmsr=cnb_banner_android_12.04" target="_blank"><img width="468" height="60" src="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/24442-20151204161943924-1792732085.jpg" alt="极客学院" title="极客学院"></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/533407/" target="_blank">程序员的思考：分享即提高</a><br> ·  <a href="http://kb.cnblogs.com/page/527814/" target="_blank">从涂鸦到发布——理解API的设计过程</a><br> ·  <a href="http://kb.cnblogs.com/page/531834/" target="_blank">好的架构是进化来的，不是设计来的</a><br> ·  <a href="http://kb.cnblogs.com/page/532236/" target="_blank">被误解的MVC和被神化的MVVM</a><br> ·  <a href="http://kb.cnblogs.com/page/530046/" target="_blank">再谈设计和编码</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/Anker/">Anker's Blog</a><br>园龄：<a href="http://home.cnblogs.com/u/Anker/" title="入园时间：2011-06-01">4年6个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/Anker/followers/">570</a><br>关注：<a href="http://home.cnblogs.com/u/Anker/followees/">13</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;91cfcfb7-5c8c-e011-a53f-842b2b196315&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2012/12/01&#39;);return false;">&lt;</a></td><td align="center">2013年1月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2013/02/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/04.html"><u>4</u></a></td><td class="CalWeekendDay" align="center">5</td></tr><tr><td class="CalWeekendDay" align="center">6</td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/07.html"><u>7</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/08.html"><u>8</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/09.html"><u>9</u></a></td><td align="center">10</td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/11.html"><u>11</u></a></td><td class="CalWeekendDay" align="center">12</td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/13.html"><u>13</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/14.html"><u>14</u></a></td><td align="center">15</td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/16.html"><u>16</u></a></td><td align="center">17</td><td align="center">18</td><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/19.html"><u>19</u></a></td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/20.html"><u>20</u></a></td><td align="center">21</td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/22.html"><u>22</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/23.html"><u>23</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/24.html"><u>24</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/25.html"><u>25</u></a></td><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/26.html"><u>26</u></a></td></tr><tr><td class="CalWeekendDay" align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/27.html"><u>27</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/28.html"><u>28</u></a></td><td align="center">29</td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/30.html"><u>30</u></a></td><td align="center"><a href="http://www.cnblogs.com/Anker/archive/2013/01/31.html"><u>31</u></a></td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td></tr><tr><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/Anker/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/Anker/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/Anker/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/Anker/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/Anker/tag/" title="我的博客的标签列表">我的标签</a></li>
+<li><a id="itemListLink" onclick="this.blur();WarpClass(&#39;itemListLink&#39;, &#39;itemListLin_con&#39;);return false;" href="http://www.cnblogs.com/Anker/archive/2013/01/30/2882773.html#">更多链接</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_recentposts" class="sidebar-block">
+<div class="catListEssay">
+<h3 class="catListTitle">最新随笔</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/Anker/p/4706244.html">1. zeromq学习笔记2——简单的客户端和服务端测试程序</a></li><li><a href="http://www.cnblogs.com/Anker/p/4706111.html">2. zeromq学习笔记1——centos下安装 zeromq-4.1.2</a></li><li><a href="http://www.cnblogs.com/Anker/p/4529465.html">3. shell中函数返回值</a></li><li><a href="http://www.cnblogs.com/Anker/p/4064091.html">4. linux性能采用工具oprofile使用</a></li><li><a href="http://www.cnblogs.com/Anker/p/4034087.html">5. 二层设备与三层设备的区别--总结</a></li><li><a href="http://www.cnblogs.com/Anker/p/3999221.html">6. 转载-vim配置收藏</a></li><li><a href="http://www.cnblogs.com/Anker/p/3864230.html">7. 并发无锁队列学习之二【单生产者单消费者】</a></li><li><a href="http://www.cnblogs.com/Anker/p/3823572.html">8. 并发无锁队列学习之一【开篇】</a></li><li><a href="http://www.cnblogs.com/Anker/p/3807228.html">9. 【收藏】介绍RCU的好文章</a></li><li><a href="http://www.cnblogs.com/Anker/p/3751369.html">10. linux 系统调用sysconf【总结】</a></li>
+</ul>
+</div>
+</div><div id="sidebar_toptags" class="sidebar-block"></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类<span style="font-size:11px;font-weight:normal">(151)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/Anker/category/436371.html">C/C++语言(18)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/Anker/category/694556.html">LeetCode</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/Anker/category/513502.html">Linux命令学习(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/Anker/category/509893.html">Linux内核学习(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/Anker/category/436373.html">Linux驱动编程(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/Anker/category/553078.html">Mysql(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/Anker/category/527391.html">PHP后台(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/Anker/category/694189.html">shell脚本(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/Anker/category/436372.html">Unix/Linux环境编程(47)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/Anker/category/436376.html">编译原理与应用</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/Anker/category/521472.html">工具使用(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/Anker/category/442770.html">进程间通信IPC(14)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/Anker/category/509895.html">开源库学习(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/Anker/category/542222.html">深入理解计算机系统</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/Anker/category/326104.html">生活日志(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/Anker/category/436374.html">数据结构与算法(25)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/Anker/category/532019.html">数据序列化(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_17" href="http://www.cnblogs.com/Anker/category/436375.html">网络编程(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_18" href="http://www.cnblogs.com/Anker/category/442998.html">网络转载(3)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案<span style="font-size:11px;font-weight:normal">(138)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/Anker/archive/2015/08.html">2015年8月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/Anker/archive/2015/05.html">2015年5月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/Anker/archive/2014/10.html">2014年10月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/Anker/archive/2014/09.html">2014年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/Anker/archive/2014/07.html">2014年7月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/Anker/archive/2014/06.html">2014年6月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/Anker/archive/2014/05.html">2014年5月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/Anker/archive/2014/04.html">2014年4月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/Anker/archive/2014/03.html">2014年3月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/Anker/archive/2014/02.html">2014年2月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/Anker/archive/2014/01.html">2014年1月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/Anker/archive/2013/12.html">2013年12月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/Anker/archive/2013/11.html">2013年11月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/Anker/archive/2013/10.html">2013年10月 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/Anker/archive/2013/09.html">2013年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/Anker/archive/2013/08.html">2013年8月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/Anker/archive/2013/07.html">2013年7月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/Anker/archive/2013/05.html">2013年5月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/Anker/archive/2013/03.html">2013年3月 (10)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/Anker/archive/2013/02.html">2013年2月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/Anker/archive/2013/01.html">2013年1月 (31)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/Anker/archive/2012/12.html">2012年12月 (27)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/Anker/archive/2011/07.html">2011年7月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_articlearchive" class="catListArticleArchive sidebar-block">
+<h3 class="catListTitle">文章档案<span style="font-size:11px;font-weight:normal">(2)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/Anker/archives/2013/08.html" rel="nofollow">2013年8月 (2)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_imagecategory" class="catListImageCategory sidebar-block">
+<h3 class="catListTitle">相册<span style="font-size:11px;font-weight:normal">(1)</span></h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_3_Link_0" href="http://www.cnblogs.com/Anker/gallery/326112.html" rel="nofollow">程序截图(1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_it新闻" class="catListIT新闻 sidebar-block">
+<h3 class="catListTitle">IT News</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_4_Link_0" href="http://www.36kr.com/" rel="nofollow">36kr关注互联网创业</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_1" href="http://www.infoq.com/cn/" rel="nofollow">Infoq</a> </li>
+<li class="c_b_p_link_desc">InfoQ（Information Queue）</li>
+<li><a id="CatList_LinkList_4_Link_2" href="http://www.20ju.com/" rel="nofollow">草根网</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_3" href="http://www.huxiu.com/" rel="nofollow">虎嗅网</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_4" href="http://www.ebusinessreview.cn/" rel="nofollow">商业评论网</a> </li>
+
+<li><a id="CatList_LinkList_4_Link_5" href="http://www.tektalk.org/" rel="nofollow">弯曲评论</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_大牛的博客，向他们学习" class="catList大牛的博客，向他们学习 sidebar-block">
+<h3 class="catListTitle">技术博客</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_5_Link_0" href="http://blog.yufeng.info/" rel="nofollow">Erlang非业余研究</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_1" href="http://www.ibm.com/developerworks/cn/" rel="nofollow">IBM developerWorks</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_2" href="http://www.cnblogs.com/xinz/" rel="nofollow">SoftwareTeacher</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_3" href="http://stblog.baidu-tech.com/?paged=3" rel="nofollow">百度搜索研发部官方博客 </a> </li>
+
+<li><a id="CatList_LinkList_5_Link_4" href="http://www.pagefault.info/" rel="nofollow">雕梁nginx和内核</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_5" href="http://coolshell.cn/" rel="nofollow">酷壳coolshell</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_6" href="http://code.taobao.org/" rel="nofollow">淘宝的 code project</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_7" href="http://rdc.taobao.com/blog/cs/" rel="nofollow">淘宝核心系统团队博客</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_8" href="http://www.taobaodba.com/" rel="nofollow">淘宝数据库技术团队</a> </li>
+
+<li><a id="CatList_LinkList_5_Link_9" href="http://blog.csdn.net/soso_blog" rel="nofollow">腾讯soso团队博客 </a> </li>
+
+<li><a id="CatList_LinkList_5_Link_10" href="http://blog.s135.com/index.php" rel="nofollow">张宴的Blog底层开发</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_不错的个人博客收藏" class="catList不错的个人博客收藏 sidebar-block">
+<h3 class="catListTitle">牛人博客</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_6_Link_0" href="http://lenky.info/" rel="nofollow">Lenky</a> </li>
+
+<li><a id="CatList_LinkList_6_Link_1" href="http://lusongsong.com/info/" rel="nofollow">卢松松</a> </li>
+
+<li><a id="CatList_LinkList_6_Link_2" href="http://blog.yufeng.info/" rel="nofollow">淘宝褚霸</a> </li>
+
+<li><a id="CatList_LinkList_6_Link_3" href="http://eli.thegreenplace.net/category/programming/lisp/sicp/">以色列学生的SICP笔记</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	210833
+	</li>
+	<li class="liRank">
+		排名 -	667
+	</li>
+</ul>
+</div>
+
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3746802.html#3315947">1. Re:采用dlopen、dlsym、dlclose加载动态链接库【总结】</a></li>
+    <li class="recent_comment_body">好文章，</li>
+    <li class="recent_comment_author">--Gru--</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3203402.html#3310982">2. Re:Centos安装gcc及g++</a></li>
+    <li class="recent_comment_body">学习了</li>
+    <li class="recent_comment_author">--小彩笔</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3265058.html#3298049">3. Re:select、poll、epoll之间的区别总结[整理]</a></li>
+    <li class="recent_comment_body">楼主好人！！！</li>
+    <li class="recent_comment_author">--itfanr</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3258674.html#3292100">4. Re:IO多路复用之select总结</a></li>
+    <li class="recent_comment_body">pool和select的参数不是引用参数吗，为什么博主说要进行大量的数组复制呢，不是只传递地址吗</li>
+    <li class="recent_comment_author">--布衣士子</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3263780.html#3287041">5. Re:IO多路复用之epoll总结</a></li>
+    <li class="recent_comment_body">看了很多，就看你这篇看懂这个epoll，很严谨</li>
+    <li class="recent_comment_author">--Hzhang</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3269106.html#3285477">6. Re:用户空间与内核空间，进程上下文与中断上下文[总结]</a></li>
+    <li class="recent_comment_body">@日落城嗯，承认楼主的一些基本概念并不清晰，啃起内核中断处理这一块比较麻烦。不过论急躁程度您也不遑多让。TSS只是存储上下文的其中一段内存，除了TSS之外还涉及各种esp和其他的内存段，不能直接说上下......</li>
+    <li class="recent_comment_author">--Tentacle</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3271773.html#3276633">7. Re:孤儿进程与僵尸进程[总结]</a></li>
+    <li class="recent_comment_body">赞!</li>
+    <li class="recent_comment_author">--lxw0109</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3746802.html#3272898">8. Re:采用dlopen、dlsym、dlclose加载动态链接库【总结】</a></li>
+    <li class="recent_comment_body">@随意飘荡void *dlsym(void *handle, const char *symbol);返回值为void*(void **)&amp;(cac_func)是将函数指针的地址强制转换void**类......</li>
+    <li class="recent_comment_author">--Anker&amp;#39;s Blog</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3746802.html#3272610">9. Re:采用dlopen、dlsym、dlclose加载动态链接库【总结】</a></li>
+    <li class="recent_comment_body">28 行： *(void **) (&amp;cac_func) = dlsym(handle, "add");想了半天没明白前面的 *(void **) 是啥意思，楼猪还在不，谢谢。...</li>
+    <li class="recent_comment_author">--随意飘荡</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/Anker/p/3258674.html#3272199">10. Re:IO多路复用之select总结</a></li>
+    <li class="recent_comment_body">@champion_lee之前是由于少了两个头文件#include #include...</li>
+    <li class="recent_comment_author">--Anker&amp;#39;s Blog</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/Anker/p/3265058.html">1. select、poll、epoll之间的区别总结[整理](47574)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3258674.html">2. IO多路复用之select总结(19891)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3271773.html">3. 孤儿进程与僵尸进程[总结](17726)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3263780.html">4. IO多路复用之epoll总结(15471)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3242207.html">5. 多个文件目录下Makefile的写法(14911)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/Anker/p/3263780.html">1. IO多路复用之epoll总结(14)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3265058.html">2. select、poll、epoll之间的区别总结[整理](13)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3271773.html">3. 孤儿进程与僵尸进程[总结](10)</a></li><li><a href="http://www.cnblogs.com/Anker/archive/2013/03/04/2943498.html">4. 递归与尾递归总结(9)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3258674.html">5. IO多路复用之select总结(9)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/Anker/p/3265058.html">1. select、poll、epoll之间的区别总结[整理](19)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3254269.html">2. 网络IO之阻塞、非阻塞、同步、异步总结(15)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3258674.html">3. IO多路复用之select总结(13)</a></li><li><a href="http://www.cnblogs.com/Anker/p/3271773.html">4. 孤儿进程与僵尸进程[总结](10)</a></li><li><a href="./《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园_files/《算法导论》读书笔记之第13章 红黑树 - Anker's Blog - 博客园.htm">5. 《算法导论》读书笔记之第13章 红黑树(10)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2015 Anker's Blog
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>
